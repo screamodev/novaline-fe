@@ -2,6 +2,8 @@
 const { t } = useI18n()
 const localePath = useLocalePath()
 const sectionLink = useSectionLink()
+const hidden = useHiddenSections()
+const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const { data: global } = useGlobal()
 const menuOpen = useMobileMenu()
 </script>
@@ -12,7 +14,7 @@ const menuOpen = useMobileMenu()
       <BrandLogo :tagline="global?.taglineLines" />
 
       <nav :aria-label="t('a11y.mainNav')" class="ml-auto hidden items-center gap-[19px] text-[14px] font-semibold xl:flex">
-        <NuxtLink v-for="id in NAV_PRIMARY" :key="id" :to="sectionLink(id)" class="whitespace-nowrap text-ink hover:text-coral">
+        <NuxtLink v-for="id in visible(NAV_PRIMARY)" :key="id" :to="sectionLink(id)" class="whitespace-nowrap text-ink hover:text-coral">
           {{ t(`nav.${id}`) }}
         </NuxtLink>
         <MoreMenu />
@@ -30,7 +32,7 @@ const menuOpen = useMobileMenu()
 
       <button
         type="button"
-        class="ml-auto inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-xl border border-line bg-white text-navy xl:hidden"
+        class="ml-auto inline-flex h-[46px] w-[46px] shrink-0 items-center justify-center rounded-[14px] border border-line bg-white text-navy xl:hidden"
         :aria-label="t('menu.open')"
         :aria-expanded="menuOpen"
         aria-controls="mobile-drawer"

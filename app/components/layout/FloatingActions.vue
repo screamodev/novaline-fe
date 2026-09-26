@@ -2,12 +2,14 @@
 const { t } = useI18n()
 const callbackOpen = useCallbackDialog()
 const assistantOpen = useAssistantPanel()
+// The assistant widget ships with feature 009; until then its button stays hidden.
+const assistantEnabled = useRuntimeConfig().public.features.assistant
 </script>
 
 <template>
   <div>
     <button
-      v-if="!assistantOpen"
+      v-if="assistantEnabled && !assistantOpen"
       type="button"
       class="fixed bottom-[86px] right-6 z-[60] inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border border-line bg-white px-5 py-[13px] text-[14.5px] font-bold text-navy shadow-fab max-xs:px-3.5 max-xs:py-3 max-xs:text-[13.5px]"
       :aria-label="t('fab.assistant')"

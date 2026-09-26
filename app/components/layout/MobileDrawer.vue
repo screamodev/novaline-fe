@@ -2,6 +2,8 @@
 const { t } = useI18n()
 const localePath = useLocalePath()
 const sectionLink = useSectionLink()
+const hidden = useHiddenSections()
+const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const { data: global } = useGlobal()
 const open = useMobileMenu()
 const panel = ref<HTMLElement | null>(null)
@@ -39,7 +41,7 @@ watch(() => route.fullPath, close)
 
         <nav :aria-label="t('a11y.mainNav')" class="mt-3.5 flex flex-col">
           <NuxtLink
-            v-for="id in [...NAV_PRIMARY, ...NAV_MORE]"
+            v-for="id in visible([...NAV_PRIMARY, ...NAV_MORE])"
             :key="id"
             :to="sectionLink(id)"
             class="flex min-h-11 items-center justify-between border-b border-line px-1 py-4 text-[16.5px] font-bold text-navy hover:text-violet"

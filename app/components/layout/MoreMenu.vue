@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const sectionLink = useSectionLink()
+const hidden = useHiddenSections()
+const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const open = ref(false)
 const root = ref<HTMLElement | null>(null)
 const menuId = useId()
@@ -42,7 +44,7 @@ onBeforeUnmount(close)
       class="absolute right-0 top-[calc(100%+10px)] z-[70] min-w-[210px] rounded-2xl border border-line bg-white p-2 shadow-menu"
     >
       <NuxtLink
-        v-for="id in NAV_MORE"
+        v-for="id in visible(NAV_MORE)"
         :key="id"
         :to="sectionLink(id)"
         class="block rounded-[10px] px-3.5 py-[11px] text-[14px] font-semibold text-ink hover:bg-bg hover:text-violet"

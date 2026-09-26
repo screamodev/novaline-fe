@@ -45,6 +45,9 @@ export default defineNuxtConfig({
     openaiModel: 'gpt-4o-mini',
     public: {
       siteUrl,
+      features: {
+        assistant: false,
+      },
     },
   },
 
@@ -74,7 +77,7 @@ export default defineNuxtConfig({
 
   image: {
     // CMS media is fetched server-side by IPX from Strapi: `cms` inside Docker, `localhost` on the host.
-    domains: ['localhost', 'cms'],
+    domains: ['localhost:1337', 'cms:1337'],
     format: ['avif', 'webp'],
   },
 
@@ -91,14 +94,16 @@ export default defineNuxtConfig({
     cssPath: '~/assets/css/main.css',
   },
 
-  // SWR cache for content pages; purged by the Strapi publish webhook (/api/revalidate).
-  routeRules: {
-    '/': { swr: 60 },
-    '/en': { swr: 60 },
-    '/news/**': { swr: 60 },
-    '/en/news/**': { swr: 60 },
-    '/internet/**': { swr: 300 },
-    '/en/internet/**': { swr: 300 },
+  // SWR cache for content pages (production only, so dev always renders fresh); purged by the Strapi webhook.
+  $production: {
+    routeRules: {
+      '/': { swr: 60 },
+      '/en': { swr: 60 },
+      '/news/**': { swr: 60 },
+      '/en/news/**': { swr: 60 },
+      '/internet/**': { swr: 300 },
+      '/en/internet/**': { swr: 300 },
+    },
   },
 
   typescript: {

@@ -11,6 +11,7 @@ export const palette = {
   violet: '#6E2CF3',
   violet2: '#8674E8',
   violetDeep: '#3A2A7A',
+  violetMid: '#8A47E8',
   coral: '#DB4576',
   navy: '#1F1D46',
   navy2: '#2A2860',
@@ -55,6 +56,12 @@ export const alpha = {
   successSoft: 'rgba(31,180,120,.14)',
 } as const
 
+/** `#RRGGBB` + alpha → `rgba(...)`, so derived tints stay tied to the palette. */
+export function withAlpha(hex: string, a: number): string {
+  const n = Number.parseInt(hex.slice(1), 16)
+  return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`
+}
+
 /** Elevation shadows — tinted with brand colours, so they live next to the palette. */
 export const shadows = {
   card: '0 20px 50px -24px rgba(45,40,120,.35)',
@@ -72,10 +79,20 @@ export const shadows = {
   dialog: '0 40px 90px -30px rgba(20,18,50,.6)',
 } as const
 
-/** Gradients built from the palette. */
+/** Gradients built from the palette (section backgrounds, cards, glows). */
 export const gradients = {
   'grad-violet': `linear-gradient(150deg, ${palette.violet}, ${palette.violet2})`,
   'grad-violet-coral': `linear-gradient(150deg, ${palette.violet}, ${palette.coral})`,
+  'icon-tile': `linear-gradient(150deg, ${withAlpha(palette.violet, 0.12)}, ${withAlpha(palette.coral, 0.12)})`,
+  'hero-scrim': `linear-gradient(90deg, ${palette.hero} 0%, ${palette.hero} 34%, ${withAlpha(palette.hero, 0.85)} 48%, ${withAlpha(palette.hero, 0.3)} 62%, ${withAlpha(palette.hero, 0)} 74%)`,
+  'hero-scrim-mobile': `linear-gradient(180deg, ${withAlpha(palette.hero, 0.72)}, ${withAlpha(palette.hero, 0.5)} 52%, ${withAlpha(palette.hero, 0.92)})`,
+  'hero-glow': `radial-gradient(680px 480px at 6% 18%, ${withAlpha(palette.violet, 0.12)}, transparent 60%), radial-gradient(560px 420px at 2% 98%, ${withAlpha(palette.coral, 0.1)}, transparent 58%)`,
+  'glow-coverage': `radial-gradient(700px 400px at 85% 0%, ${withAlpha(palette.violet2, 0.28)}, transparent 60%), radial-gradient(600px 400px at 0% 100%, ${withAlpha(palette.coral, 0.16)}, transparent 55%)`,
+  'glow-dc': `radial-gradient(700px 420px at 90% 0%, ${withAlpha(palette.violet2, 0.26)}, transparent 60%), radial-gradient(600px 400px at 0% 100%, ${withAlpha(palette.coral, 0.14)}, transparent 55%)`,
+  'glow-about': `radial-gradient(700px 400px at 100% 100%, ${withAlpha(palette.violet2, 0.22)}, transparent 60%)`,
+  'popular-card': `linear-gradient(160deg, ${palette.navy}, ${palette.violetDeep})`,
+  'lead-card': `linear-gradient(135deg, ${palette.violet}, ${palette.violetMid} 60%, ${palette.coral})`,
+  'plans-bg': `linear-gradient(180deg, ${palette.white}, ${palette.bg})`,
 } as const
 
 export type PaletteColor = keyof typeof palette

@@ -46,12 +46,6 @@ export default <Partial<Config>>{
       maxWidth: {
         container: '1240px',
       },
-      borderRadius: {
-        xl: '14px',
-        '2xl': '20px',
-        '3xl': '24px',
-        '4xl': '28px',
-      },
       boxShadow: shadows,
       screens: {
         // Prototype breakpoints (max-width) mapped to min-width equivalents.

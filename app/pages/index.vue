@@ -1,14 +1,71 @@
 <script setup lang="ts">
-// Landing sections arrive with feature 003; this page already exercises the shell, SEO and CMS data.
-const { t } = useI18n()
-const { data: global } = useGlobal()
-useSeo()
+import type { HomeVM } from '#shared/types/home'
+
+const { data: home, error } = await useHome()
+if (error.value && !home.value) throw createError({ statusCode: 503, statusMessage: 'CMS unavailable', fatal: true })
+
+const localePath = useLocalePath()
+const siteUrl = useRuntimeConfig().public.siteUrl
+
+/** Sections without published content are not rendered and drop out of the navigation. */
+const hidden = useHiddenSections()
+function emptySections(h: HomeVM): SectionId[] {
+  const out: SectionId[] = []
+  if (!h.services.items.length) out.push('services')
+  if (!Object.values(h.plans.bySegment).some((l) => l.length)) out.push('plans')
+  if (!h.tv.packages.length && !h.tv.channels.length) out.push('tv')
+  if (!h.promos.items.length) out.push('promos')
+  if (!h.dataCentre.services.length) out.push('datacenter')
+  if (!h.shop.items.length) out.push('shop')
+  if (!h.payment.methods.length) out.push('payment')
+  if (!h.news.items.length) out.push('news')
+  if (!h.about.heading) out.push('about')
+  return out
+}
+watchEffect(() => (hidden.value = home.value ? emptySections(home.value) : []))
+const show = (id: SectionId) => !hidden.value.includes(id)
+
+useSeo(() => home.value?.seo)
+useReveal()
+
+// Structured data: offered services with prices, payment how-tos and the latest articles.
+const h = home.value
+if (h) {
+  const offer = (price: number | null, name: string) =>
+    price === null ? undefined : { price, priceCurrency: 'UAH', name }
+  const plans = Object.values(h.plans.bySegment).flat()
+  useSchemaOrg([
+    ...plans.map((p) =>
+      defineService({ '@id': `#service-plan-${p.key}`, name: `${p.name} — ${p.speedLabel}`, serviceType: 'Internet access', offers: offer(p.price.amount, p.name) }),
+    ),
+    ...h.tv.packages.map((p) =>
+      defineService({ '@id': `#service-tv-${p.key}`, name: p.name, serviceType: 'OTT television', offers: offer(p.price, p.name) }),
+    ),
+    ...h.dataCentre.services.map((s) =>
+      defineService({ '@id': `#service-dc-${s.key}`, name: s.title, description: s.description, offers: offer(s.price, s.title) }),
+    ),
+    ...h.payment.methods.map((m) => defineHowTo({ '@id': `#howto-${m.key}`, name: m.name, step: m.steps.map((text) => ({ text })) })),
+    defineItemList({
+      itemListElement: h.news.items.map((a) => ({ name: a.title, url: `${siteUrl}${localePath(`/news/${a.slug}`)}` })),
+    }),
+  ])
+}
 </script>
 
 <template>
-  <section class="container-page flex min-h-[60vh] flex-col items-start justify-center gap-6 py-[96px]">
-    <h1 class="text-h1 text-navy">NovaLine</h1>
-    <p class="max-w-[520px] text-[18px] leading-[1.6] text-muted">{{ t('meta.description') }}</p>
-    <p class="text-[14px] text-muted">{{ global?.footerTagline }}</p>
-  </section>
+  <div v-if="home">
+    <HeroSection :hero="home.hero" />
+    <TrustStrip :items="home.trust" />
+    <CoverageTeaser :heading="home.coverage.heading" />
+    <ServicesSection v-if="show('services')" :data="home.services" />
+    <PlansSection v-if="show('plans')" :data="home.plans" :addons="home.addons" />
+    <TvSection v-if="show('tv')" :data="home.tv" />
+    <PromosSection v-if="show('promos')" :data="home.promos" />
+    <DataCentreSection v-if="show('datacenter')" :data="home.dataCentre" />
+    <ShopSection v-if="show('shop')" :data="home.shop" />
+    <PaymentSection v-if="show('payment')" :data="home.payment" />
+    <NewsPreviewSection v-if="show('news')" :data="home.news" />
+    <AboutSection v-if="show('about')" :data="home.about" />
+    <LeadTeaser :heading="home.lead.heading" />
+  </div>
 </template>

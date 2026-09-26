@@ -4,6 +4,8 @@ import type { SocialNetwork } from '#shared/types/cms'
 const { t } = useI18n()
 const localePath = useLocalePath()
 const sectionLink = useSectionLink()
+const hidden = useHiddenSections()
+const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const { data: global } = useGlobal()
 
 const FOOTER_SECTIONS = ['coverage', 'plans', 'tv', 'promos', 'news', 'datacenter', 'shop', 'payment'] as const
@@ -63,7 +65,7 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
       <div>
         <h2 class="mb-4 font-display text-[14px] font-semibold text-white">{{ t('nav.services') }}</h2>
         <nav :aria-label="t('a11y.footerNav')" class="flex flex-col gap-2.5 text-[14.5px]">
-          <NuxtLink v-for="id in FOOTER_SECTIONS" :key="id" :to="sectionLink(id)" class="text-on-dark hover:text-white">
+          <NuxtLink v-for="id in visible(FOOTER_SECTIONS)" :key="id" :to="sectionLink(id)" class="text-on-dark hover:text-white">
             {{ t(`nav.${id}`) }}
           </NuxtLink>
           <NuxtLink :to="localePath('/radio')" class="text-on-dark hover:text-white">{{ t('nav.radio') }}</NuxtLink>

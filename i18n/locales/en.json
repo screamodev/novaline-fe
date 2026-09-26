@@ -51,5 +51,56 @@
     "serverTitle": "Service temporarily unavailable",
     "serverText": "We are already on it. Please refresh in a minute or give us a call.",
     "home": "Back to home"
+  },
+  "common": {
+    "popular": "Popular",
+    "order": "Order"
+  },
+  "hero": {
+    "speedAlt": "Connection speed"
+  },
+  "plans": {
+    "tablist": "Connection type",
+    "segments": {
+      "private": "Private homes",
+      "apartment": "Apartment",
+      "business": "Business"
+    }
+  },
+  "tv": {
+    "channelsIn": "channels included",
+    "order": "Get this package",
+    "all": "All",
+    "filter": "Channel categories",
+    "tiers": {
+      "min": "Minimal",
+      "mid": "Medium",
+      "max": "Maximum"
+    }
+  },
+  "promo": {
+    "until": "Valid until",
+    "terms": "Offer terms",
+    "cta": "Get this offer"
+  },
+  "dc": {
+    "from": "from",
+    "onRequest": "on request",
+    "order": "Request this service"
+  },
+  "shop": {
+    "buy": "Order"
+  },
+  "news": {
+    "read": "Read",
+    "all": "All news"
+  },
+  "coverage": {
+    "teaserText": "The interactive address check is coming here shortly. Meanwhile, leave a request and we will check the connection at your address.",
+    "cta": "Leave a request"
+  },
+  "lead": {
+    "teaserTitle": "Call us or request a callback",
+    "callback": "Call me back"
   }
 }
