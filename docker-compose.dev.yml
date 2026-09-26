@@ -1,0 +1,27 @@
+# Dev: Nuxt with HMR. Full dev stack: `docker compose -f docker-compose.dev.yml up` in `therecom/`.
+services:
+  web:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "corepack enable && pnpm install && pnpm dev --host 0.0.0.0"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NODE_ENV: development
+      NUXT_STRAPI_URL: ${NUXT_STRAPI_URL:-http://host.docker.internal:1337}
+      COREPACK_ENABLE_DOWNLOAD_PROMPT: "0"
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - .:/app
+      - web_node_modules:/app/node_modules
+      - web_nuxt:/app/.nuxt
+      - web_data:/app/.data
+    ports:
+      - "3000:3000"
+      - "24678:24678"
+
+volumes:
+  web_node_modules:
+  web_nuxt:
+  web_data:

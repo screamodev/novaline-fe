@@ -72,7 +72,7 @@ On "Залишити заявку" the lead form (feature 005) receives region/d
 
 - **FR-001**: `[be]` Coverage tree is served in one localised request (contract in 001); `[fe]` `/api/cms/coverage` caches it and exposes a flat search index + tree.
 - **FR-002**: Selection state lives in a shared composable/store (`useCoverage`) used by the section, the map and the lead form.
-- **FR-003**: Prices in the result = base plan price + neighbourhood modifier; which plans are shown follows 001 FR-007 [NEEDS CLARIFICATION: same plan set everywhere or per-settlement].
+- **FR-003**: The result shows plans flagged `availableForCoverage` (same set for every settlement); price = base plan price + selected neighbourhood modifier (001 FR-007).
 - **FR-004**: Map colours and marker sizes MUST come from `colors.ts` constants; tile provider and attribution per CARTO/OSM terms.
 - **FR-005**: The map component MUST be `<ClientOnly>` + lazy-hydrated on visibility; it MUST be destroyed on unmount.
 - **FR-006**: The hint line MUST show the count of covered settlements from data ("Понад 300 населених пунктів…" text from CMS with count placeholder).
