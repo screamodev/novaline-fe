@@ -45,8 +45,9 @@ export default defineNuxtConfig({
     openaiModel: 'gpt-4o-mini',
     public: {
       siteUrl,
+      // NUXT_PUBLIC_FEATURES_ASSISTANT=false hides the assistant widget.
       features: {
-        assistant: false,
+        assistant: true,
       },
       // Coverage map tiles (OSM by default; darkened with CSS). Override via NUXT_PUBLIC_MAP_TILE_URL / _ATTRIBUTION.
       map: {

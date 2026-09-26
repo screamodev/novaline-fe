@@ -226,5 +226,20 @@
   },
   "payment": {
     "payOnline": "Pay online"
+  },
+  "assistant": {
+    "placeholder": "Type your question…",
+    "send": "Send",
+    "demo": "Assistant demo",
+    "typing": "Assistant is typing…",
+    "you": "You",
+    "bot": "Assistant",
+    "error": "Could not get an answer. Try again or leave a request.",
+    "rateLimited": "Too many messages. Try again in a few minutes or call us.",
+    "actions": {
+      "lead": "Leave a request",
+      "callback": "Request a call",
+      "coverage": "Check coverage"
+    }
   }
 }

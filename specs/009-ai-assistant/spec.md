@@ -4,7 +4,7 @@
 
 **Created**: 2026-09-26
 
-**Status**: Draft
+**Status**: Implemented (2026-09-27)
 
 **Input**: User description: "The 'Запитати асистента' widget from the prototype, backed by OpenAI (placeholder key for now), answering questions about plans, coverage, payment, TV, equipment, data centre and promos using live data from Strapi."
 

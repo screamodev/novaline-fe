@@ -2,24 +2,39 @@
 const { t } = useI18n()
 const callbackOpen = useCallbackDialog()
 const assistantOpen = useAssistantPanel()
-// The assistant widget ships with feature 009; until then its button stays hidden.
 const assistantEnabled = useRuntimeConfig().public.features.assistant
+const { track } = useAnalytics()
+const fab = ref<HTMLButtonElement | null>(null)
+
+const openAssistant = () => {
+  assistantOpen.value = true
+  track('assistant_open')
+}
+// Return focus to the launcher when the panel closes (it is removed from the DOM while open).
+const closeAssistant = async () => {
+  assistantOpen.value = false
+  await nextTick()
+  fab.value?.focus()
+}
 </script>
 
 <template>
   <div>
     <button
       v-if="assistantEnabled && !assistantOpen"
+      ref="fab"
       type="button"
       class="fixed bottom-[86px] right-6 z-[60] max-xs:bottom-[84px] max-xs:right-4 inline-flex items-center gap-2.5 whitespace-nowrap rounded-full border border-line bg-white px-5 py-[13px] text-[14.5px] font-bold text-navy shadow-fab max-xs:px-3.5 max-xs:py-3 max-xs:text-[13.5px]"
       :aria-label="t('fab.assistant')"
-      @click="assistantOpen = true"
+      @click="openAssistant"
     >
       <span class="grid h-[26px] w-[26px] place-items-center rounded-[9px] bg-grad-violet-coral text-white">
         <AppIcon name="bot" :size="15" :stroke-width="2.1" />
       </span>
       <span class="max-xs:hidden">{{ t('fab.assistant') }}</span>
     </button>
+    <!-- Lazy: the widget code is downloaded only when the visitor first opens it. -->
+    <LazyAssistantPanel v-if="assistantEnabled && assistantOpen" @close="closeAssistant" />
 
     <button
       type="button"
