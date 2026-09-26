@@ -1,6 +1,11 @@
 <script setup lang="ts">
 const head = useLocaleHead()
-const { data: global } = await useGlobal()
+const { data: global, error: globalError } = await useGlobal()
+// Without CMS data the page would be incomplete; a 503 is never stored by the SWR route cache,
+// so a previously cached good page keeps being served while Strapi is down.
+if (globalError.value && !global.value) {
+  throw createError({ statusCode: 503, statusMessage: 'CMS unavailable', fatal: true })
+}
 const org = global.value?.organization
 
 useHead(() => ({
