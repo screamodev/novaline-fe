@@ -61,7 +61,14 @@ Bots filling the hidden honeypot field, or submitting faster than 2 s after rend
 - Phone formats: `+380985060609`, `098 506 06 09`, `(098) 506-06-09` → normalised to `+380985060609`.
 - Double-click submit → one lead (button disabled while pending, idempotency key).
 - Message > 1,000 chars → rejected with a hint.
-- JS disabled → form posts natively to the server route and returns a server-rendered success/error page.
+
+## Clarifications
+
+### Session 2026-09-26
+
+- Q: Privacy policy? → A: CMS single type `privacy-page`, page `/privacy`, placeholder text in seed.
+- Q: Telegram bot available? → A: Later. Notification code ships now; without token/chat id it is skipped with a startup warning.
+- Q: No-JS form fallback? → A: Not required; the form submits via fetch.
 
 ## Requirements *(mandatory)*
 
@@ -73,7 +80,7 @@ Bots filling the hidden honeypot field, or submitting faster than 2 s after rend
 - **FR-004**: Topic lists (connect/issue) are UI micro-copy in i18n JSON; the stored value is a stable key plus the localised label.
 - **FR-005**: The form uses native inputs with labels, `autocomplete` (`name`, `tel`), `inputmode="tel"`, and error messages linked via `aria-describedby`.
 - **FR-006**: Analytics events `lead_submit_success` / `callback_submit_success` are emitted (provider-agnostic hook).
-- **FR-007**: The privacy note links to a privacy policy page. [NEEDS CLARIFICATION: is there an existing privacy policy text, or should a CMS-managed `/privacy` page be added?]
+- **FR-007**: The privacy note links to `/privacy` (and `/en/privacy`), a CMS-managed page (`privacy-page` single type) seeded with placeholder text for the client to replace.
 
 ## Success Criteria *(mandatory)*
 

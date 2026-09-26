@@ -44,7 +44,7 @@ The visitor types "піс" in "Пошук за назвою"; a dropdown lists u
 
 ### User Story 3 - Visitor explores the map (Priority: P2)
 
-The right panel shows a dark CARTO map (initial view ~[49.85, 35.4], zoom 7, scroll-wheel zoom off) with a marker per settlement — regional centres larger coral, others smaller violet — tooltips with names, a "300+ вузлів" badge and a legend. Clicking a marker selects that settlement (same as search). Selecting via selects/search highlights the marker (white fill, coral ring, bigger), brings it to front, and flies to it (zoom 11).
+The right panel shows a dark map (OSM tiles with a dark filter) (initial view ~[49.85, 35.4], zoom 7, scroll-wheel zoom off) with a marker per settlement — regional centres larger coral, others smaller violet — tooltips with names, a "300+ вузлів" badge and a legend. Clicking a marker selects that settlement (same as search). Selecting via selects/search highlights the marker (white fill, coral ring, bigger), brings it to front, and flies to it (zoom 11).
 
 **Acceptance Scenarios**:
 
@@ -66,6 +66,12 @@ On "Залишити заявку" the lead form (feature 005) receives region/d
 - Coverage data fails to load → selects show an error hint with a phone link; lead form still works.
 - Deep link `/?settlement=pisochyn#coverage` → preselects (used by locality pages, feature 007).
 
+## Clarifications
+
+### Session 2026-09-26
+
+- Q: Map tiles? → A: OpenStreetMap tiles darkened with a CSS filter (CARTO dark now requires an API key). Tile URL and attribution are runtime config so the provider can change without code.
+
 ## Requirements *(mandatory)*
 
 ### Functional Requirements
@@ -73,7 +79,7 @@ On "Залишити заявку" the lead form (feature 005) receives region/d
 - **FR-001**: `[be]` Coverage tree is served in one localised request (contract in 001); `[fe]` `/api/cms/coverage` caches it and exposes a flat search index + tree.
 - **FR-002**: Selection state lives in a shared composable/store (`useCoverage`) used by the section, the map and the lead form.
 - **FR-003**: The result shows plans flagged `availableForCoverage` (same set for every settlement); price = base plan price + selected neighbourhood modifier (001 FR-007).
-- **FR-004**: Map colours and marker sizes MUST come from `colors.ts` constants; tile provider and attribution per CARTO/OSM terms.
+- **FR-004**: Map colours and marker sizes MUST come from `colors.ts` constants; tiles are OSM (dark CSS filter) configured via `runtimeConfig.public.map` with OSM attribution.
 - **FR-005**: The map component MUST be `<ClientOnly>` + lazy-hydrated on visibility; it MUST be destroyed on unmount.
 - **FR-006**: The hint line MUST show the count of covered settlements from data ("Понад 300 населених пунктів…" text from CMS with count placeholder).
 - **FR-007**: All labels/placeholders localised; selects are native `<select>` for mobile usability, styled per prototype.
