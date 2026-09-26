@@ -34,7 +34,7 @@ const order = (plan: PlanVM) => setLeadContext({ kind: 'plan', key: plan.key, la
           v-if="segments.length > 1"
           role="tablist"
           :aria-label="t('plans.tablist')"
-          class="inline-flex flex-wrap rounded-full border border-line bg-white p-[5px]"
+          class="inline-flex flex-wrap rounded-full border border-line bg-white p-[5px] max-sm:flex max-sm:w-full max-sm:flex-nowrap"
         >
           <button
             v-for="(segment, i) in segments"
@@ -46,7 +46,7 @@ const order = (plan: PlanVM) => setLeadContext({ kind: 'plan', key: plan.key, la
             :aria-selected="active === segment"
             :aria-controls="`plans-panel-${segment}`"
             :tabindex="active === segment ? 0 : -1"
-            class="whitespace-nowrap rounded-full px-4 py-[9px] text-[13.5px] font-bold transition duration-200"
+            class="whitespace-nowrap rounded-full px-4 py-[9px] text-[13.5px] font-bold transition duration-200 max-sm:min-h-11 max-sm:flex-1 max-sm:whitespace-normal max-sm:px-2 max-sm:text-[13px] max-sm:leading-tight"
             :class="active === segment ? 'bg-violet text-white' : 'text-muted hover:text-navy'"
             @click="active = segment"
             @keydown="onTabKey($event, i)"

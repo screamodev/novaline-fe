@@ -21,7 +21,7 @@ const { data: global } = useGlobal()
           v-for="phone in global?.phones"
           :key="phone.tel"
           :href="`tel:${phone.tel}`"
-          :class="phone.primary ? 'font-semibold text-on-dark hover:text-white' : 'text-on-dark-soft hover:text-white'"
+          :class="['tap-target', phone.primary ? 'font-semibold text-on-dark hover:text-white' : 'text-on-dark-soft hover:text-white']"
         >
           {{ phone.display }}
         </a>
@@ -29,7 +29,7 @@ const { data: global } = useGlobal()
       <div class="flex items-center gap-2 max-sm:gap-1.5">
         <NuxtLink
           :to="localePath('/radio')"
-          class="inline-flex items-center gap-[7px] rounded-full border border-glass-line px-3 py-[5px] font-semibold text-on-dark hover:text-white"
+          class="tap-target inline-flex items-center gap-[7px] rounded-full border border-glass-line px-3 py-[5px] font-semibold text-on-dark hover:text-white max-[400px]:hidden"
         >
           <AppIcon name="play" :size="13" />{{ t('nav.radio') }}
         </NuxtLink>
@@ -38,7 +38,7 @@ const { data: global } = useGlobal()
           :href="global.cabinetUrl"
           target="_blank"
           rel="noopener"
-          class="inline-flex items-center gap-[7px] rounded-full bg-white px-[15px] py-[7px] font-bold text-navy shadow-pill hover:text-navy"
+          class="tap-target inline-flex items-center gap-[7px] whitespace-nowrap rounded-full bg-white px-[15px] py-[7px] font-bold text-navy shadow-pill hover:text-navy"
         >
           <AppIcon name="key" :size="14" :stroke-width="2.2" class="text-violet" />{{ t('topbar.cabinet') }}
         </a>

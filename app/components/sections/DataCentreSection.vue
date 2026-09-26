@@ -25,13 +25,13 @@ const { set: setLeadContext } = useLeadContext()
         <li
           v-for="service in data.services"
           :key="service.key"
-          class="flex items-start justify-between gap-5 rounded-[18px] border border-line-dark bg-glass p-[26px]"
+          class="flex items-start justify-between gap-5 rounded-[18px] border border-line-dark bg-glass p-[26px] max-sm:flex-col max-sm:gap-3 max-sm:p-5"
         >
           <div>
             <h3 class="font-display text-[17px] font-semibold leading-[1.25] text-white">{{ service.title }}</h3>
             <p class="mt-2.5 text-[14px] leading-[1.6] text-on-dark-dim">{{ service.description }}</p>
           </div>
-          <div class="shrink-0 text-right">
+          <div class="shrink-0 text-right max-sm:flex max-sm:items-baseline max-sm:gap-1.5 max-sm:text-left">
             <div class="whitespace-nowrap font-display text-[19px] font-extrabold text-violet-2">
               {{ service.price === null ? t('dc.onRequest') : `${t('dc.from')} ${fmt.amount(service.price)}` }}
             </div>

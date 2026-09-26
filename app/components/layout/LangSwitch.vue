@@ -12,7 +12,7 @@ const alternates = useAlternatePaths()
       :to="alternates?.[l.code] ?? switchLocalePath(l.code)"
       :hreflang="l.language"
       :aria-current="l.code === locale ? 'true' : undefined"
-      class="rounded-full px-[11px] py-1 text-[12px] font-bold"
+      class="tap-target rounded-full px-[11px] py-1 text-[12px] font-bold"
       :class="l.code === locale ? 'bg-white text-navy hover:text-navy' : 'text-on-dark hover:text-white'"
     >
       {{ l.name }}

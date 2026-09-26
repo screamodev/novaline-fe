@@ -43,7 +43,8 @@ function sync() {
 onMounted(async () => {
   const L = await import('leaflet')
   if (!el.value) return
-  map = L.map(el.value, { zoomControl: true, scrollWheelZoom: false })
+  // On touch phones a one-finger drag must scroll the page, not pan the map (zoom buttons and taps still work).
+  map = L.map(el.value, { zoomControl: true, scrollWheelZoom: false, dragging: !L.Browser.mobile })
   if (props.initialCenter) {
     // Single-settlement mode: start focused, no fly-in animation.
     map.setView(props.initialCenter, 11)
@@ -58,6 +59,10 @@ onMounted(async () => {
     m.bindTooltip(s.name, { direction: 'top', offset: [0, -6] })
     m.on('click', () => emit('pick', s.slug))
     markers.set(s.slug, m)
+  }
+  // Overview mode: fit every covered settlement, whatever the panel width.
+  if (!props.initialCenter && markers.size) {
+    map.fitBounds(L.featureGroup([...markers.values()]).getBounds(), { padding: [24, 24] })
   }
   sync()
   if (props.initialCenter) markers.get(props.selected)?.openTooltip()

@@ -50,8 +50,8 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
 
       <div>
         <h2 class="mb-4 font-display text-[14px] font-semibold text-white">{{ t('footer.phones') }}</h2>
-        <div class="flex flex-col gap-2.5 text-[14.5px]">
-          <a v-for="phone in global?.phones" :key="phone.tel" :href="`tel:${phone.tel}`" class="text-on-dark hover:text-white">
+        <div class="flex flex-col gap-2.5 text-[14.5px] max-sm:gap-0">
+          <a v-for="phone in global?.phones" :key="phone.tel" :href="`tel:${phone.tel}`" class="text-on-dark hover:text-white max-sm:py-[11px]">
             {{ phone.display }}
           </a>
         </div>
@@ -59,25 +59,26 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
 
       <div>
         <h2 class="mb-4 font-display text-[14px] font-semibold text-white">{{ t('footer.email') }}</h2>
-        <a v-if="global?.email" :href="`mailto:${global.email}`" class="text-[14.5px] text-on-dark hover:text-white">{{ global.email }}</a>
+        <a v-if="global?.email" :href="`mailto:${global.email}`" class="text-[14.5px] text-on-dark hover:text-white max-sm:inline-block max-sm:py-[11px]">{{ global.email }}</a>
       </div>
 
       <div>
         <h2 class="mb-4 font-display text-[14px] font-semibold text-white">{{ t('nav.services') }}</h2>
-        <nav :aria-label="t('a11y.footerNav')" class="flex flex-col gap-2.5 text-[14.5px]">
-          <NuxtLink v-for="id in visible(FOOTER_SECTIONS)" :key="id" :to="sectionLink(id)" class="text-on-dark hover:text-white">
+        <nav :aria-label="t('a11y.footerNav')" class="flex flex-col gap-2.5 text-[14.5px] max-sm:gap-0">
+          <NuxtLink v-for="id in visible(FOOTER_SECTIONS)" :key="id" :to="sectionLink(id)" class="text-on-dark hover:text-white max-sm:py-[11px]">
             {{ t(`nav.${id}`) }}
           </NuxtLink>
-          <NuxtLink :to="localePath('/internet')" class="text-on-dark hover:text-white">{{ t('footer.coverage') }}</NuxtLink>
-          <NuxtLink :to="localePath('/radio')" class="text-on-dark hover:text-white">{{ t('nav.radio') }}</NuxtLink>
-          <a v-if="global?.cabinetUrl" :href="global.cabinetUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white">
+          <NuxtLink :to="localePath('/internet')" class="text-on-dark hover:text-white max-sm:py-[11px]">{{ t('footer.coverage') }}</NuxtLink>
+          <NuxtLink :to="localePath('/radio')" class="text-on-dark hover:text-white max-sm:py-[11px]">{{ t('nav.radio') }}</NuxtLink>
+          <a v-if="global?.cabinetUrl" :href="global.cabinetUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white max-sm:py-[11px]">
             {{ t('topbar.cabinet') }}
           </a>
         </nav>
       </div>
     </div>
     <div class="border-t border-glass-strong">
-      <div class="container-page py-5 text-[13px] text-on-dark-footer">{{ global?.copyright }}</div>
+      <!-- Extra bottom space on phones so the floating callback button never covers the copyright. -->
+      <div class="container-page py-5 text-[13px] text-on-dark-footer max-sm:pb-24">{{ global?.copyright }}</div>
     </div>
   </footer>
 </template>

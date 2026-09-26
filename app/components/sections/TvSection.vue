@@ -9,6 +9,10 @@ const { data: global } = useGlobal()
 const { set: setLeadContext } = useLeadContext()
 
 const category = ref('')
+/** On phones the full list is long; show the first MOBILE_LIMIT channels until expanded (all stay in the HTML). */
+const MOBILE_LIMIT = 12
+const expanded = ref(false)
+const visibleChannels = computed(() => props.data.channels.filter((c) => isVisible(c.categoryKey)))
 const isVisible = (categoryKey: string) => !category.value || category.value === categoryKey
 const chipDots = ['bg-violet', 'bg-coral', 'bg-violet-2']
 const TIER_CLASS: Record<TvTier, string> = {
@@ -88,7 +92,7 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
             :key="c.key"
             type="button"
             :aria-pressed="category === c.key"
-            class="whitespace-nowrap rounded-full px-4 py-[9px] text-[13.5px] font-semibold"
+            class="whitespace-nowrap rounded-full px-4 py-[9px] text-[13.5px] font-semibold max-sm:min-h-11"
             :class="category === c.key ? 'bg-violet text-white' : 'border border-line bg-white text-muted hover:text-navy'"
             @click="category = c.key"
           >
@@ -102,6 +106,7 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
             v-show="isVisible(ch.categoryKey)"
             :key="ch.key"
             class="flex items-center justify-between gap-2.5 rounded-xl bg-bg px-3.5 py-3"
+            :class="!expanded && visibleChannels.indexOf(ch) >= MOBILE_LIMIT && 'max-md:hidden'"
           >
             <span class="truncate text-[14px] font-bold text-navy">{{ ch.name }}</span>
             <span class="whitespace-nowrap rounded-full px-2 py-[3px] text-[10.5px] font-bold" :class="TIER_CLASS[ch.tier]">
@@ -109,6 +114,14 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
             </span>
           </li>
         </ul>
+        <button
+          v-if="!expanded && visibleChannels.length > MOBILE_LIMIT"
+          type="button"
+          class="mt-3 hidden min-h-11 w-full rounded-xl border-[1.5px] border-line text-[14px] font-bold text-navy max-md:block"
+          @click="expanded = true"
+        >
+          {{ t('tv.showAll', { count: visibleChannels.length }) }}
+        </button>
         <p v-if="data.channelsNote" class="mt-[18px] text-[12.5px] text-muted">{{ data.channelsNote }}</p>
       </div>
     </div>

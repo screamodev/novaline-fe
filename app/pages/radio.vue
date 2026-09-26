@@ -25,7 +25,7 @@ useSeo(() => ({ ...radio.value?.seo, title: radio.value?.seo.title || radio.valu
         </NuxtLink>
         <NuxtLink
           :to="localePath('/')"
-          class="inline-flex items-center gap-2 rounded-full border border-white/[.28] bg-white/[.06] px-[18px] py-2.5 text-[14px] font-semibold text-white hover:text-white"
+          class="inline-flex min-h-11 items-center gap-2 rounded-full border border-white/[.28] bg-white/[.06] px-[18px] py-2.5 text-[14px] font-semibold text-white hover:text-white"
         >
           <AppIcon name="arrowLeft" :size="15" :stroke-width="2.2" /><span class="max-sm:sr-only">{{ t('radio.back') }}</span>
         </NuxtLink>

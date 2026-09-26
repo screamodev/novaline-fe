@@ -79,7 +79,8 @@
       "min": "Minimal",
       "mid": "Medium",
       "max": "Maximum"
-    }
+    },
+    "showAll": "Show all channels ({count})"
   },
   "promo": {
     "until": "Valid until",

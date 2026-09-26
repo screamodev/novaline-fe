@@ -24,6 +24,15 @@
 }
 
 @layer components {
+  /* Enlarges the touch area of small inline links/buttons to ~44px without changing the layout. */
+  .tap-target {
+    @apply relative;
+  }
+  .tap-target::after {
+    content: '';
+    position: absolute;
+    inset: -12px -6px;
+  }
   .container-page {
     @apply mx-auto w-full max-w-container px-7 max-sm:px-[18px];
   }
@@ -39,6 +48,15 @@ html.js .reveal:not(.is-in) {
 }
 html.js .reveal.is-in {
   @apply animate-rise;
+}
+
+/* iOS Safari zooms into form fields with font-size < 16px; keep them at 16px on phones. */
+@media (max-width: 640px) {
+  input:not([type='range']),
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -126,14 +144,24 @@ html.js .reveal.is-in {
   }
 }
 
-/* ---------- Radio volume slider ---------- */
+/* ---------- Radio volume slider (44px touch area, 6px visible track) ---------- */
 .nl-range {
   -webkit-appearance: none;
   appearance: none;
+  height: 44px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+}
+.nl-range::-webkit-slider-runnable-track {
   height: 6px;
   border-radius: 999px;
   background: theme('colors.white / 20%');
-  outline: none;
+}
+.nl-range::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: theme('colors.white / 20%');
 }
 .nl-range:focus-visible {
   outline: 2px solid theme('colors.violet.2');
@@ -146,6 +174,7 @@ html.js .reveal.is-in {
   border-radius: 50%;
   background: theme('colors.white');
   cursor: pointer;
+  margin-top: -6px;
   box-shadow: theme('boxShadow.pill');
 }
 .nl-range::-moz-range-thumb {

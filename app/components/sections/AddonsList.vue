@@ -15,14 +15,14 @@ const fmt = useFormat()
       <li
         v-for="addon in data.items"
         :key="addon.key"
-        class="flex items-start justify-between gap-[18px] rounded-[18px] border bg-white p-6"
+        class="flex items-start justify-between gap-[18px] rounded-[18px] border bg-white p-6 max-sm:flex-col max-sm:gap-3"
         :class="addon.highlighted ? 'border-coral/40' : 'border-line'"
       >
         <div>
           <div class="text-[16px] font-bold text-navy">{{ addon.title }}</div>
           <p class="mt-[7px] text-[13.5px] leading-[1.55] text-muted">{{ addon.description }}</p>
         </div>
-        <div class="shrink-0 text-right">
+        <div class="shrink-0 text-right max-sm:flex max-sm:items-baseline max-sm:gap-1.5 max-sm:text-left">
           <div class="whitespace-nowrap font-display text-[22px] font-extrabold" :class="addon.highlighted ? 'text-coral' : 'text-violet'">
             {{ fmt.price(addon.price, { plus: true }) }}
           </div>
