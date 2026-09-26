@@ -33,7 +33,8 @@
   },
   "footer": {
     "phones": "Phones",
-    "email": "Email"
+    "email": "Email",
+    "coverage": "Coverage: all localities"
   },
   "fab": {
     "assistant": "Ask the assistant",
@@ -184,5 +185,32 @@
     "home": "Home",
     "news": "News",
     "coverage": "Coverage"
+  },
+  "locality": {
+    "directoryTitle": "NovaLine coverage",
+    "directoryLead": "Fibre internet is already available in {count} localities. Choose yours to see plans, neighbourhood prices and leave a request.",
+    "directorySearch": "Find a locality",
+    "h1": "Internet {place} — GPON fibre from NovaLine",
+    "placeFallback": "in {name}",
+    "intro": "NovaLine brings fibre internet {place} ({district}, {region}). {technology} runs fibre straight into your building — a stable {speed}, backup power at the nodes and 24/7 support.",
+    "introNeigh": "Plan prices depend on the neighbourhood — see the table below for each one.",
+    "introPlans": "Private-home plans start at {min} UAH/mo, with the first month of internet free on connection.",
+    "facts": {
+      "technology": "Technology",
+      "speed": "Speed",
+      "district": "District",
+      "region": "Region"
+    },
+    "pricesTitle": "Prices {place}",
+    "neighbourhood": "Neighbourhood",
+    "base": "Base price",
+    "pricesNote": "Prices in UAH/mo. A manager confirms the final price when processing your request.",
+    "nearbyTitle": "Also connected nearby",
+    "nearbyLink": "Internet {place}",
+    "seoTitle": "Internet {place}: GPON fibre from {min} UAH/mo {'|'} NovaLine",
+    "seoDescription": "Fibre internet {place} ({district}). {speed}, plans from {min} UAH/mo, backup power and 24/7 support. Check your address and leave a request.",
+    "serviceName": "Fibre internet {place}",
+    "more": "More about internet {place}",
+    "directoryLink": "All localities"
   }
 }

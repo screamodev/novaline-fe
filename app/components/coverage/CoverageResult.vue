@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import type { HomeVM, PlanVM } from '#shared/types/home'
 import { planPrice } from '#shared/utils/coverage'
+import type { SettlementEntry } from '#shared/types/coverage'
 
-defineProps<{ copy: HomeVM['coverage']; plans: PlanVM[]; locality: string; modifier: number }>()
+defineProps<{ copy: HomeVM['coverage']; plans: PlanVM[]; locality: string; modifier: number; settlement?: SettlementEntry }>()
 const emit = defineEmits<{ change: []; lead: [] }>()
 const { t } = useI18n()
 const fmt = useFormat()
+const localePath = useLocalePath()
 </script>
 
 <template>
@@ -68,5 +70,12 @@ const fmt = useFormat()
     <BaseButton variant="coral" block class="mt-3.5 !py-[15px] !text-[15.5px] !shadow-none" @click="emit('lead')">
       {{ t('coverage.leave') }}<AppIcon name="arrowRight" :size="17" :stroke-width="2.4" />
     </BaseButton>
+    <NuxtLink
+      v-if="settlement"
+      :to="localePath(`/internet/${settlement.slug}`)"
+      class="mt-3 block text-center text-[13.5px] font-semibold text-violet hover:text-coral-strong"
+    >
+      {{ t('locality.more', { place: settlement.nameLocative || t('locality.placeFallback', { name: settlement.name }) }) }} →
+    </NuxtLink>
   </div>
 </template>

@@ -4,7 +4,7 @@ import type { CircleMarker, Map as LeafletMap } from 'leaflet'
 import type { SettlementEntry } from '#shared/types/coverage'
 import { palette } from '~/theme/colors'
 
-const props = defineProps<{ index: SettlementEntry[]; selected: string }>()
+const props = defineProps<{ index: SettlementEntry[]; selected: string; initialCenter?: [number, number] }>()
 const emit = defineEmits<{ pick: [slug: string] }>()
 const { tileUrl, attribution } = useRuntimeConfig().public.map
 
@@ -43,7 +43,14 @@ function sync() {
 onMounted(async () => {
   const L = await import('leaflet')
   if (!el.value) return
-  map = L.map(el.value, { zoomControl: true, scrollWheelZoom: false }).setView([49.85, 35.4], 7)
+  map = L.map(el.value, { zoomControl: true, scrollWheelZoom: false })
+  if (props.initialCenter) {
+    // Single-settlement mode: start focused, no fly-in animation.
+    map.setView(props.initialCenter, 11)
+    flownTo = props.selected
+  } else {
+    map.setView([49.85, 35.4], 7)
+  }
   L.tileLayer(tileUrl, { maxZoom: 18, attribution }).addTo(map)
   for (const s of props.index) {
     if (s.lat == null || s.lng == null) continue
@@ -53,6 +60,7 @@ onMounted(async () => {
     markers.set(s.slug, m)
   }
   sync()
+  if (props.initialCenter) markers.get(props.selected)?.openTooltip()
 })
 watch(() => [props.selected, props.index], sync)
 onBeforeUnmount(() => {

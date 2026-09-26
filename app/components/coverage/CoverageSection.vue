@@ -25,20 +25,6 @@ function goLead() {
   router.push({ path: localePath('/'), hash: '#lead' })
 }
 
-// The map (Leaflet + tiles) loads only when the panel scrolls into view.
-const mapShell = ref<HTMLElement | null>(null)
-const mapVisible = ref(false)
-onMounted(() => {
-  if (!mapShell.value) return
-  const io = new IntersectionObserver(([e]) => {
-    if (e?.isIntersecting) {
-      mapVisible.value = true
-      io.disconnect()
-    }
-  }, { rootMargin: '200px' })
-  io.observe(mapShell.value)
-  onBeforeUnmount(() => io.disconnect())
-})
 </script>
 
 <template>
@@ -110,6 +96,7 @@ onMounted(() => {
             :plans="coveragePlans"
             :locality="c.resultLabel.value"
             :modifier="c.modifier.value"
+            :settlement="c.entry.value"
             @change="c.reset"
             @lead="goLead"
           />
@@ -120,36 +107,7 @@ onMounted(() => {
         </div>
 
         <!-- Right: coverage map -->
-        <div class="relative overflow-hidden rounded-3xl border border-line-dark bg-map-panel p-[22px] max-sm:p-4">
-          <div class="flex items-center justify-between gap-3">
-            <h3 class="font-display text-[14px] font-semibold text-white">{{ copy.mapTitle }}</h3>
-            <span
-              v-if="copy.nodesCount"
-              class="rounded-full border border-coral/40 bg-coral/20 px-[11px] py-[5px] text-[11.5px] font-bold text-white"
-            >
-              {{ copy.nodesCount }}+ {{ copy.nodesLabel }}
-            </span>
-          </div>
-          <div ref="mapShell" class="relative z-[1] mt-4 h-[380px] overflow-hidden rounded-2xl border border-line-dark bg-navy-deep max-sm:h-[300px]">
-            <a href="#coverage-map-end" class="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-[500] focus:rounded-lg focus:bg-white focus:px-3 focus:py-1.5 focus:text-navy">
-              {{ t('coverage.mapSkip') }}
-            </a>
-            <LazyCoverageMapCanvas
-              v-if="mapVisible"
-              :index="c.index.value"
-              :selected="c.address.value.settlement"
-              @pick="c.pickSettlement"
-            />
-          </div>
-          <span id="coverage-map-end" />
-          <p v-if="copy.mapHint" class="mt-3 flex items-start gap-2 text-[12.5px] leading-[1.5] text-on-dark-dim">
-            <AppIcon name="info" :size="15" class="mt-0.5 text-violet-2" />{{ copy.mapHint }}
-          </p>
-          <div class="mt-3.5 flex gap-[18px] text-[12px] text-on-dark-dim">
-            <span v-if="copy.legendCity" class="inline-flex items-center gap-1.5"><span class="h-[9px] w-[9px] rounded-full bg-coral" />{{ copy.legendCity }}</span>
-            <span v-if="copy.legendVillage" class="inline-flex items-center gap-1.5"><span class="h-[9px] w-[9px] rounded-full bg-violet-2" />{{ copy.legendVillage }}</span>
-          </div>
-        </div>
+        <CoverageMapPanel :copy="copy" :index="c.index.value" :selected="c.address.value.settlement" @pick="c.pickSettlement" />
       </div>
     </div>
   </section>

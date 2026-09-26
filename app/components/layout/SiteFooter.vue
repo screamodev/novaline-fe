@@ -68,6 +68,7 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
           <NuxtLink v-for="id in visible(FOOTER_SECTIONS)" :key="id" :to="sectionLink(id)" class="text-on-dark hover:text-white">
             {{ t(`nav.${id}`) }}
           </NuxtLink>
+          <NuxtLink :to="localePath('/internet')" class="text-on-dark hover:text-white">{{ t('footer.coverage') }}</NuxtLink>
           <NuxtLink :to="localePath('/radio')" class="text-on-dark hover:text-white">{{ t('nav.radio') }}</NuxtLink>
           <a v-if="global?.cabinetUrl" :href="global.cabinetUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white">
             {{ t('topbar.cabinet') }}

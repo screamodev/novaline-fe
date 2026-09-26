@@ -1,3 +1,6 @@
+import type { BlockNode } from './blocks'
+import type { SeoVM } from './cms'
+
 export interface NeighbourhoodVM {
   name: string
   priceModifier: number
@@ -24,4 +27,10 @@ export interface SettlementEntry extends SettlementVM {
   regionName: string
   districtSlug: string
   districtName: string
+}
+
+/** Optional per-settlement CMS overrides for locality pages. */
+export interface SettlementExtraVM {
+  intro: BlockNode[]
+  seo: SeoVM
 }

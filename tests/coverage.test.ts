@@ -44,3 +44,22 @@ describe('planPrice', () => {
     expect(planPrice(null, 30)).toBeNull()
   })
 })
+
+import { distanceKm, nearestSettlements } from '../shared/utils/coverage'
+
+describe('nearestSettlements', () => {
+  const at = (slug: string, lat: number, lng: number, districtSlug = 'd') =>
+    ({ slug, name: slug, nameLocative: null, lat, lng, isRegionalCentre: false, neighbourhoods: [], regionSlug: 'r', regionName: 'R', districtSlug, districtName: 'D' })
+  const kharkiv = at('kharkiv', 49.9935, 36.2304)
+  const idx = [kharkiv, at('pisochyn', 49.9539, 36.1122), at('poltava', 49.5883, 34.5514), at('dergachi', 50.1069, 36.1181)]
+  it('orders by distance and excludes itself', () => {
+    expect(nearestSettlements(kharkiv, idx, 2).map((s) => s.slug)).toEqual(['pisochyn', 'dergachi'])
+  })
+  it('computes a sensible distance (Kharkiv–Poltava ≈ 130 km)', () => {
+    expect(Math.round(distanceKm(kharkiv, { lat: 49.5883, lng: 34.5514 }) / 10) * 10).toBe(130)
+  })
+  it('falls back to the same district without coordinates', () => {
+    const noGeo = { ...kharkiv, slug: 'x', lat: null, lng: null }
+    expect(nearestSettlements(noGeo, idx, 2).map((s) => s.slug)).toEqual(['kharkiv', 'pisochyn'])
+  })
+})
