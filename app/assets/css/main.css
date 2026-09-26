@@ -57,3 +57,71 @@ html.js .reveal.is-in {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ---------- Leaflet on the navy coverage panel (colours via theme tokens) ---------- */
+.nl-map.leaflet-container {
+  background: theme('colors.navy.deep');
+  font-family: inherit;
+}
+/* OSM tiles are light; invert + tint them to the navy palette. */
+.nl-map .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(200deg) saturate(0.55) brightness(0.8) contrast(0.95);
+}
+.nl-map .leaflet-control-attribution {
+  font-size: 9.5px;
+  background: theme('colors.navy.deep / 82%');
+  color: theme('colors.on-dark.dim');
+}
+.nl-map .leaflet-control-attribution a {
+  color: theme('colors.violet.2');
+}
+.nl-map .leaflet-bar a {
+  background: theme('colors.navy.DEFAULT');
+  color: theme('colors.white');
+  border-color: theme('colors.glass.line');
+}
+.nl-map .leaflet-bar a:hover {
+  background: theme('colors.violet.DEFAULT');
+}
+.nl-map .leaflet-tooltip {
+  background: theme('colors.navy.DEFAULT');
+  color: theme('colors.white');
+  border: 1px solid theme('colors.line.dark-strong');
+  font-weight: 600;
+  font-size: 12px;
+  box-shadow: theme('boxShadow.map-tooltip');
+}
+.nl-map .leaflet-tooltip-top::before {
+  border-top-color: theme('colors.line.dark-strong');
+}
+
+/* ---------- CMS rich text (privacy page, articles) ---------- */
+@layer components {
+  .rich-text {
+    @apply text-[16px] leading-[1.7] text-ink;
+  }
+  .rich-text > * + * {
+    @apply mt-4;
+  }
+  .rich-text h2 {
+    @apply mt-10 font-display text-[24px] font-bold leading-[1.2] text-navy;
+  }
+  .rich-text h3 {
+    @apply mt-8 font-display text-[19px] font-semibold text-navy;
+  }
+  .rich-text ul {
+    @apply list-disc pl-6;
+  }
+  .rich-text ol {
+    @apply list-decimal pl-6;
+  }
+  .rich-text li + li {
+    @apply mt-1.5;
+  }
+  .rich-text a {
+    @apply font-semibold text-violet underline underline-offset-2;
+  }
+  .rich-text blockquote {
+    @apply border-l-4 border-violet pl-4 text-muted;
+  }
+}

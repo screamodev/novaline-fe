@@ -31,3 +31,15 @@ export async function strapiLocalized<T extends { data: unknown }>(path: string,
   if (locale !== DEFAULT_LOCALE && isEmpty(res)) return strapiGet<T>(path, { ...query, locale: DEFAULT_LOCALE })
   return res
 }
+
+/** Server-side POST to Strapi with the private token (e.g. creating leads). */
+export async function strapiPost<T>(path: string, body: Record<string, unknown>): Promise<T> {
+  const { strapiUrl, strapiToken } = useRuntimeConfig()
+  return $fetch<T, string>(path, {
+    baseURL: `${strapiUrl}/api`,
+    method: 'POST',
+    body,
+    headers: strapiToken ? { Authorization: `Bearer ${strapiToken}` } : undefined,
+    timeout: 8000,
+  })
+}

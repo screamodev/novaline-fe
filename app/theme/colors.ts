@@ -79,6 +79,8 @@ export const shadows = {
   drawer: '-30px 0 70px -30px rgba(20,18,50,.6)',
   menu: '0 24px 60px -20px rgba(33,30,72,.4)',
   dialog: '0 40px 90px -30px rgba(20,18,50,.6)',
+  dropdown: '0 20px 44px -18px rgba(10,8,40,.7)',
+  'map-tooltip': '0 8px 22px -8px rgba(0,0,0,.7)',
 } as const
 
 /** Gradients built from the palette (section backgrounds, cards, glows). */
@@ -94,6 +96,7 @@ export const gradients = {
   'glow-about': `radial-gradient(700px 400px at 100% 100%, ${withAlpha(palette.violet2, 0.22)}, transparent 60%)`,
   'popular-card': `linear-gradient(160deg, ${palette.navy}, ${palette.violetDeep})`,
   'lead-card': `linear-gradient(135deg, ${palette.violet}, ${palette.violetMid} 60%, ${palette.coral})`,
+  'map-panel': `linear-gradient(160deg, ${palette.navyPanel}, ${palette.navyPanel2})`,
   'plans-bg': `linear-gradient(180deg, ${palette.white}, ${palette.bg})`,
 } as const
 

@@ -96,11 +96,75 @@
     "all": "All news"
   },
   "coverage": {
-    "teaserText": "The interactive address check is coming here shortly. Meanwhile, leave a request and we will check the connection at your address.",
-    "cta": "Leave a request"
+    "searchLabel": "Search by name",
+    "searchPlaceholder": "Start typing a city or village name…",
+    "searchNone": "Nothing found. Try another name or use the lists below.",
+    "searchOr": "or choose from the lists",
+    "searchResults": "Found: {count}",
+    "clear": "Clear",
+    "region": "Region (oblast)",
+    "district": "District (raion)",
+    "settlement": "Settlement",
+    "neighbourhood": "Neighbourhood",
+    "selectRegion": "Select a region",
+    "selectDistrict": "Select a district",
+    "selectSettlement": "Select a settlement",
+    "selectNeighbourhood": "Select a neighbourhood",
+    "neighbourhoodNote": "Price depends on the selected neighbourhood",
+    "check": "Check",
+    "change": "Change address",
+    "technology": "Technology",
+    "speed": "Speed",
+    "leave": "Leave a request",
+    "mapSkip": "Skip the map"
   },
   "lead": {
-    "teaserTitle": "Call us or request a callback",
-    "callback": "Call me back"
+    "typeConnect": "New connection",
+    "typeIssue": "Question / issue",
+    "typeLabel": "Request type",
+    "address": "Connection address",
+    "name": "Your name",
+    "namePh": "e.g. Olena",
+    "phone": "Phone",
+    "phonePh": "+38 (0__) ___ __ __",
+    "reason": "Topic",
+    "reasonPh": "Choose a topic",
+    "message": "Message",
+    "messageOptional": "optional",
+    "messagePh": "Add details: address, best time to call, your question…",
+    "submit": "Send request",
+    "sending": "Sending…",
+    "privacyBefore": "By clicking, you agree to the ",
+    "privacyLink": "processing of your data",
+    "privacyAfter": ".",
+    "success": "Thank you! We’ll get in touch shortly.",
+    "errors": {
+      "name": "Enter your name (at least 2 characters).",
+      "phone": "Enter a Ukrainian number, e.g. 098 506 06 09.",
+      "reason": "Choose a topic.",
+      "message": "Message up to 1000 characters.",
+      "rate": "Too many requests from your address. Try again in a few minutes or call us.",
+      "server": "The request could not be sent. Please call us:"
+    },
+    "topics": {
+      "internet": "Internet connection",
+      "tv": "TV connection",
+      "cable": "Cable installation",
+      "equipment": "Equipment consultation",
+      "public-ip": "Public IP address",
+      "no-internet": "No internet",
+      "slow": "Slow speed",
+      "billing": "Billing question",
+      "move": "Move to a new address",
+      "other": "Other question"
+    }
+  },
+  "callback": {
+    "sub": "Leave your number — we’ll call you shortly.",
+    "submit": "Call me back",
+    "success": "Done! We’ll be in touch shortly."
+  },
+  "privacy": {
+    "updated": "This document is maintained in the site admin."
   }
 }

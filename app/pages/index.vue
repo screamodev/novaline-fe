@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { HomeVM } from '#shared/types/home'
 
-const { data: home, error } = await useHome()
+const [{ data: home, error }] = await Promise.all([useHome(), useCoverageData()])
 if (error.value && !home.value) throw createError({ statusCode: 503, statusMessage: 'CMS unavailable', fatal: true })
 
 const localePath = useLocalePath()
@@ -56,7 +56,7 @@ if (h) {
   <div v-if="home">
     <HeroSection :hero="home.hero" />
     <TrustStrip :items="home.trust" />
-    <CoverageTeaser :heading="home.coverage.heading" />
+    <CoverageSection :copy="home.coverage" :plans="Object.values(home.plans.bySegment).flat()" />
     <ServicesSection v-if="show('services')" :data="home.services" />
     <PlansSection v-if="show('plans')" :data="home.plans" :addons="home.addons" />
     <TvSection v-if="show('tv')" :data="home.tv" />
@@ -66,6 +66,6 @@ if (h) {
     <PaymentSection v-if="show('payment')" :data="home.payment" />
     <NewsPreviewSection v-if="show('news')" :data="home.news" />
     <AboutSection v-if="show('about')" :data="home.about" />
-    <LeadTeaser :heading="home.lead.heading" />
+    <LeadSection :heading="home.lead.heading" />
   </div>
 </template>
