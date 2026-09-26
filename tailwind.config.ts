@@ -34,8 +34,9 @@ export default <Partial<Config>>{
         viber: palette.viber,
       },
       fontFamily: {
-        display: ['Unbounded', 'system-ui', 'sans-serif'],
-        body: ['Manrope', 'system-ui', 'sans-serif'],
+        // '<Font> Fallback' = Arial size-adjusted to the web font (main.css), so text does not reflow when it swaps in.
+        display: ['Unbounded', 'Unbounded Fallback', 'system-ui', 'sans-serif'],
+        body: ['Manrope', 'Manrope Fallback', 'system-ui', 'sans-serif'],
       },
       fontSize: {
         h1: ['clamp(38px, 4.6vw, 60px)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],

@@ -17,6 +17,8 @@ export default defineNuxtConfig({
   ],
 
   css: ['~/assets/css/main.css'],
+  // Inline all CSS into the SSR HTML: removes the render-blocking stylesheet request (FCP/LCP on mobile).
+  features: { inlineStyles: true },
 
   // Components are referenced by file name (e.g. <SiteHeader>, <BaseButton>) regardless of folder.
   components: [{ path: '~/components', pathPrefix: false }],
@@ -74,10 +76,13 @@ export default defineNuxtConfig({
     detectBrowserLanguage: false,
   },
 
+  // Only the weights the UI uses; Cyrillic + Latin subsets (the site is uk/en).
   fonts: {
+    // No font preloads: metric fallbacks (main.css) prevent reflow, and the hero image gets the bandwidth first.
+    defaults: { subsets: ['cyrillic', 'latin'], preload: false },
     families: [
-      { name: 'Manrope', provider: 'google', weights: [400, 500, 600, 700, 800] },
-      { name: 'Unbounded', provider: 'google', weights: [500, 600, 700, 800] },
+      { name: 'Manrope', provider: 'google', weights: [400, 500, 600, 700] },
+      { name: 'Unbounded', provider: 'google', weights: [600, 700, 800] },
     ],
   },
 
