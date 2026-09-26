@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg font-body text-ink antialiased;
+    overflow-x: hidden;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply m-0 font-display font-bold leading-[1.05] tracking-[-0.01em];
+  }
+  a {
+    @apply text-violet no-underline hover:text-coral;
+  }
+  ::selection {
+    @apply bg-violet text-white;
+  }
+}

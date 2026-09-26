@@ -1,0 +1,15 @@
+# Frontend only. For the full stack run `docker compose up` in the parent `therecom/` folder.
+services:
+  web:
+    build: .
+    image: novaline-fe:latest
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      NODE_ENV: production
+      NUXT_STRAPI_URL: ${NUXT_STRAPI_URL:-http://host.docker.internal:1337}
+    ports:
+      - "3000:3000"
+    mem_limit: 512m
