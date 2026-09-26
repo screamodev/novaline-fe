@@ -13,9 +13,10 @@ const { set: setLeadContext } = useLeadContext()
       v-if="hero.image"
       :src="hero.image.src"
       :alt="hero.image.alt"
-      sizes="100vw md:66vw"
+      :width="hero.image.width ?? 1400"
+      sizes="xs:100vw sm:100vw md:66vw lg:66vw xl:66vw"
       format="webp"
-      preload
+      :preload="{ fetchPriority: 'high' }"
       fetchpriority="high"
       class="absolute inset-y-0 right-0 h-full w-auto max-w-[66%] object-cover object-center max-tab:max-w-full"
     />

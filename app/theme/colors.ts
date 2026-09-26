@@ -13,6 +13,8 @@ export const palette = {
   violetDeep: '#3A2A7A',
   violetMid: '#8A47E8',
   coral: '#DB4576',
+  /** Coral darkened 7% for fills behind white text (WCAG AA 4.6:1; brand coral is 4.1:1). */
+  coralStrong: '#CC406E',
   navy: '#1F1D46',
   navy2: '#2A2860',
   navyDeep: '#100E2C',

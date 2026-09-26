@@ -31,7 +31,7 @@ const localePath = useLocalePath()
             </div>
             <h3 class="mt-4 font-display text-[18px] font-semibold leading-[1.3] text-navy">{{ article.title }}</h3>
             <p class="mt-[11px] text-[14px] leading-[1.6] text-muted">{{ article.excerpt }}</p>
-            <span class="mt-auto inline-flex items-center gap-[7px] pt-5 text-[14px] font-bold text-coral">
+            <span class="mt-auto inline-flex items-center gap-[7px] pt-5 text-[14px] font-bold text-coral-strong">
               {{ t('news.read') }}<AppIcon name="arrowRight" :size="15" :stroke-width="2.4" />
             </span>
           </NuxtLink>

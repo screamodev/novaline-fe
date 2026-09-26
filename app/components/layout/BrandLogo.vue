@@ -4,7 +4,7 @@ const localePath = useLocalePath()
 </script>
 
 <template>
-  <NuxtLink :to="localePath('/')" class="flex shrink-0 items-center gap-[13px]" aria-label="NovaLine">
+  <NuxtLink :to="localePath('/')" class="flex shrink-0 items-center gap-[13px]">
     <span v-if="variant === 'footer'" class="grid place-items-center rounded-xl bg-white px-2.5 py-2">
       <img src="/images/novaline-logo.svg" alt="NovaLine" width="52" height="46" class="block h-[46px] w-auto">
     </span>

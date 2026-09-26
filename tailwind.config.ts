@@ -13,7 +13,7 @@ export default <Partial<Config>>{
     extend: {
       colors: {
         violet: { DEFAULT: palette.violet, 2: palette.violet2, deep: palette.violetDeep, soft: alpha.violetSoft },
-        coral: { DEFAULT: palette.coral, soft: alpha.coralSoft },
+        coral: { DEFAULT: palette.coral, strong: palette.coralStrong, soft: alpha.coralSoft },
         navy: {
           DEFAULT: palette.navy,
           2: palette.navy2,

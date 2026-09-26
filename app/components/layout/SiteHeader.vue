@@ -18,8 +18,8 @@ const menuOpen = useMobileMenu()
           {{ t(`nav.${id}`) }}
         </NuxtLink>
         <MoreMenu />
-        <NuxtLink :to="localePath('/radio')" class="inline-flex items-center gap-[7px] font-bold text-coral hover:text-coral">
-          <span class="grid h-[22px] w-[22px] place-items-center rounded-full bg-coral text-white">
+        <NuxtLink :to="localePath('/radio')" class="inline-flex items-center gap-[7px] font-bold text-coral-strong hover:text-coral-strong">
+          <span class="grid h-[22px] w-[22px] place-items-center rounded-full bg-coral-strong text-white">
             <AppIcon name="play" :size="10" />
           </span>
           {{ t('nav.radio') }}

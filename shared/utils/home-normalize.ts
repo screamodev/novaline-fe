@@ -40,6 +40,8 @@ export interface HomeRaw {
 const str = (v: unknown): string => (typeof v === 'string' ? v : '')
 const opt = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v : null)
 const num = (v: unknown): number | null => (v === null || v === undefined || v === '' ? null : Number(v))
+/** The page-level alt text (edited with the copy) wins over the media library alt. */
+const withAlt = <T extends { alt: string }>(media: T | null, alt: string | null): T | null => (media && alt ? { ...media, alt } : media)
 const texts = (list: unknown): string[] => (Array.isArray(list) ? list.map((f) => str(f?.text)).filter(Boolean) : [])
 
 export function toHeading(h: Raw | null | undefined): HeadingVM | null {
@@ -163,7 +165,7 @@ export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday
       promoText: opt(hero.promoText),
       primaryCta: opt(hero.primaryCta),
       secondaryCta: opt(hero.secondaryCta),
-      image: toMedia(hero.image, mediaBase, str(hero.imageAlt)),
+      image: withAlt(toMedia(hero.image, mediaBase), opt(hero.imageAlt)),
       speedValue: opt(hero.speedValue),
       speedUnit: opt(hero.speedUnit),
       speedCaption: opt(hero.speedCaption),

@@ -18,7 +18,7 @@ const apply = (p: PromoVM) => setLeadContext({ kind: 'promo', key: p.key, label:
         <div class="flex flex-1 flex-col p-[30px] max-sm:p-6">
           <span
             class="self-start rounded-full px-3 py-1.5 text-[11.5px] font-bold uppercase tracking-[.05em]"
-            :class="promo.accent === 'coral' ? 'bg-coral-soft text-coral' : 'bg-violet-soft text-violet'"
+            :class="promo.accent === 'coral' ? 'bg-coral-soft text-coral-strong' : 'bg-violet-soft text-violet'"
           >
             {{ promo.tag }}
           </span>

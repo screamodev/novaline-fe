@@ -51,7 +51,7 @@ watch(() => route.fullPath, close)
           </NuxtLink>
           <NuxtLink
             :to="localePath('/radio')"
-            class="flex min-h-11 items-center justify-between border-b border-line px-1 py-4 text-[16.5px] font-bold text-coral hover:text-coral"
+            class="flex min-h-11 items-center justify-between border-b border-line px-1 py-4 text-[16.5px] font-bold text-coral-strong hover:text-coral-strong"
           >
             {{ t('nav.radio') }}<span aria-hidden="true">→</span>
           </NuxtLink>

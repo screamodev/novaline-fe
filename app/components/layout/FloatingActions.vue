@@ -23,7 +23,7 @@ const assistantEnabled = useRuntimeConfig().public.features.assistant
 
     <button
       type="button"
-      class="fixed bottom-6 right-6 z-[60] inline-flex items-center gap-2.5 rounded-full bg-coral px-5 py-[15px] text-[14.5px] font-bold text-white shadow-fab-coral"
+      class="fixed bottom-6 right-6 z-[60] inline-flex items-center gap-2.5 rounded-full bg-coral-strong px-5 py-[15px] text-[14.5px] font-bold text-white shadow-fab-coral"
       @click="callbackOpen = true"
     >
       <AppIcon name="phone" :size="18" :stroke-width="2.2" />

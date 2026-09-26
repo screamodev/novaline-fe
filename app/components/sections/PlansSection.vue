@@ -75,7 +75,7 @@ const order = (plan: PlanVM) => setLeadContext({ kind: 'plan', key: plan.key, la
         >
           <span
             v-if="plan.popular"
-            class="absolute right-[22px] top-[22px] rounded-full bg-coral px-3 py-[5px] text-[11px] font-bold text-white"
+            class="absolute right-[22px] top-[22px] rounded-full bg-coral-strong px-3 py-[5px] text-[11px] font-bold text-white"
           >
             {{ t('common.popular') }}
           </span>
@@ -108,7 +108,7 @@ const order = (plan: PlanVM) => setLeadContext({ kind: 'plan', key: plan.key, la
           <NuxtLink
             :to="sectionLink('lead')"
             class="mt-[26px] flex justify-center rounded-xl py-3.5 text-[15px] font-bold"
-            :class="plan.popular ? 'bg-coral text-white hover:text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet hover:text-navy'"
+            :class="plan.popular ? 'bg-coral-strong text-white hover:text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet hover:text-navy'"
             @click="order(plan)"
           >
             {{ t('common.order') }}

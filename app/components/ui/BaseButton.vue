@@ -20,7 +20,7 @@ const props = withDefaults(
 
 const VARIANTS: Record<Variant, string> = {
   violet: 'bg-violet text-white shadow-btn-violet hover:text-white hover:brightness-110',
-  coral: 'bg-coral text-white shadow-btn-coral hover:text-white hover:brightness-110',
+  coral: 'bg-coral-strong text-white shadow-btn-coral hover:text-white hover:brightness-110',
   white: 'bg-white text-navy border-[1.5px] border-line hover:text-navy hover:border-violet',
   soft: 'bg-bg text-navy border-[1.5px] border-line hover:text-navy hover:border-violet',
 }

@@ -56,7 +56,7 @@ description: "Tasks for 003-landing-sections"
 
 - [x] T023 `pnpm typecheck && pnpm test && pnpm lint:colors && pnpm build`
 - [x] T024 SSR checks: all segments/channels/steps in HTML, JSON-LD parses, EN complete, no Cyrillic literals in components
-- [ ] T025 Visual diff vs prototype 1280/820/390; Lighthouse mobile (requires browser tooling)
+- [x] T025 Visual diff vs prototype 1280/390 (headless Chrome); Lighthouse mobile via Caddy with compression: Perf 90–92, A11y 100, BP 100, SEO 100 except `is-crawlable` (noindex outside production)
 
 ## Implementation notes (2026-09-26)
 
@@ -66,3 +66,5 @@ description: "Tasks for 003-landing-sections"
 - News cards link to `/news/<slug>`; those pages arrive with feature 006 (phase 4).
 - Callback FAB opens an interim dialog with phone numbers; the assistant FAB is behind `runtimeConfig.public.features.assistant` (off) until 009.
 - Visual diff done with headless Chrome at 1280 and 390 against the prototype (Chrome extension unavailable); sections match, remaining offsets come from the coverage placeholder height.
+- Accessibility: white text on brand coral is 4.1:1, so fills/text use `coral.strong` (#CC406E, 4.6:1); brand coral stays for decoration.
+- Lab LCP on simulated slow 4G is 3.0 s (target 2.5 s): remaining cost is render-blocking CSS + two web fonts; revisit with critical-CSS inlining / font subsetting in the final audit (phase 5).

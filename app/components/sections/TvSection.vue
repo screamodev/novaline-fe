@@ -14,7 +14,7 @@ const chipDots = ['bg-violet', 'bg-coral', 'bg-violet-2']
 const TIER_CLASS: Record<TvTier, string> = {
   min: 'bg-success-soft text-success-ink',
   mid: 'bg-violet-soft text-violet',
-  max: 'bg-coral-soft text-coral',
+  max: 'bg-coral-soft text-coral-strong',
 }
 const categories = computed(() => [{ key: '', name: t('tv.all') }, ...props.data.categories])
 const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label: p.name })
@@ -42,7 +42,7 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
           class="relative flex flex-col rounded-[22px] p-8"
           :class="pkg.popular ? 'bg-popular-card text-white shadow-popular' : 'border border-line bg-white'"
         >
-          <span v-if="pkg.popular" class="absolute right-[22px] top-[22px] rounded-full bg-coral px-3 py-[5px] text-[11px] font-bold text-white">
+          <span v-if="pkg.popular" class="absolute right-[22px] top-[22px] rounded-full bg-coral-strong px-3 py-[5px] text-[11px] font-bold text-white">
             {{ t('common.popular') }}
           </span>
           <h3 class="font-display text-[20px] font-semibold" :class="pkg.popular ? 'text-white' : 'text-navy'">{{ pkg.name }}</h3>
@@ -70,7 +70,7 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
             <NuxtLink
               :to="sectionLink('lead')"
               class="flex justify-center rounded-xl py-3.5 text-[15px] font-bold"
-              :class="pkg.popular ? 'bg-coral text-white hover:text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet hover:text-navy'"
+              :class="pkg.popular ? 'bg-coral-strong text-white hover:text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet hover:text-navy'"
               @click="order(pkg)"
             >
               {{ t('tv.order') }}
