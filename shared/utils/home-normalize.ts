@@ -14,6 +14,7 @@ import type {
   TvPackageVM,
 } from '../types/home'
 import { PLAN_SEGMENTS } from '../types/home'
+import { toArticleCard } from './articles'
 import { toMedia, toSeo } from './cms-normalize'
 
 /** Raw Strapi documents are loosely typed here; the normaliser is the single place that knows their shape. */
@@ -147,13 +148,7 @@ export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday
     steps: texts(m.steps),
   }))
 
-  const articles: ArticleCardVM[] = raw.articles.map((a) => ({
-    slug: str(a.slug),
-    title: str(a.title),
-    excerpt: str(a.excerpt),
-    categoryName: opt(a.category?.name),
-    publishedDate: str(a.publishedDate),
-  }))
+  const articles: ArticleCardVM[] = raw.articles.map(toArticleCard)
 
   return {
     seo: toSeo(page.seo, mediaBase),

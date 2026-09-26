@@ -1,5 +1,5 @@
 import type { StrapiSingleResponse } from '#shared/types/cms'
-import type { BlockNode } from '~/components/ui/RichText'
+import type { BlockNode } from '#shared/types/blocks'
 import { toSeo } from '#shared/utils/cms-normalize'
 
 interface RawPrivacy {

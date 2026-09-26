@@ -4,7 +4,7 @@ import type { SeoVM } from '#shared/types/cms'
  * Page meta from a CMS SEO component, falling back to the global default SEO and then to i18n defaults.
  * hreflang/canonical links come from `useLocaleHead` in app.vue.
  */
-export function useSeo(page?: MaybeRefOrGetter<Partial<SeoVM> | null | undefined>) {
+export function useSeo(page?: MaybeRefOrGetter<Partial<SeoVM> | null | undefined>, options: { type?: 'website' | 'article' } = {}) {
   const { t } = useI18n()
   const { data: global } = useGlobal()
   const img = useImage()
@@ -29,7 +29,7 @@ export function useSeo(page?: MaybeRefOrGetter<Partial<SeoVM> | null | undefined
     description: () => seo.value.description,
     ogTitle: () => seo.value.title,
     ogDescription: () => seo.value.description,
-    ogType: 'website',
+    ogType: options.type ?? 'website',
     ogSiteName: 'NovaLine',
     ogImage: () => ogImage.value,
     twitterCard: 'summary_large_image',

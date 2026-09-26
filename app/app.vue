@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const head = useLocaleHead()
+const head = useLocaleHead({ seo: { canonicalQueries: ['page', 'category'] } })
 const { data: global, error: globalError } = await useGlobal()
 // Without CMS data the page would be incomplete; a 503 is never stored by the SWR route cache,
 // so a previously cached good page keeps being served while Strapi is down.

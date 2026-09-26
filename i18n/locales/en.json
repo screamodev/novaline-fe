@@ -43,7 +43,9 @@
     "language": "Site language",
     "mainNav": "Main navigation",
     "footerNav": "Footer navigation",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "breadcrumbs": "Breadcrumb",
+    "pagination": "Pages"
   },
   "error": {
     "notFoundTitle": "Page not found",
@@ -93,7 +95,18 @@
   },
   "news": {
     "read": "Read",
-    "all": "All news"
+    "all": "All news",
+    "categoryAll": "All",
+    "page": "Page {n}",
+    "prev": "Previous",
+    "next": "Next",
+    "related": "Read also",
+    "ctaTitle": "Want to connect?",
+    "ctaText": "Check whether NovaLine reaches your address or leave a request — we will get in touch shortly.",
+    "ctaCoverage": "Check coverage",
+    "ctaLead": "Leave a request",
+    "published": "Published",
+    "empty": "No articles in this category yet."
   },
   "coverage": {
     "searchLabel": "Search by name",
@@ -166,5 +179,10 @@
   },
   "privacy": {
     "updated": "This document is maintained in the site admin."
+  },
+  "breadcrumbs": {
+    "home": "Home",
+    "news": "News",
+    "coverage": "Coverage"
   }
 }
