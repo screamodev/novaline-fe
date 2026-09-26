@@ -41,6 +41,12 @@ From a news card the visitor opens `/news/rozshyryuiemo-pokryttia-poltavskyi-rai
 - Very long titles → wrap; meta title truncated sensibly (≤ 60 chars target, CMS field overrides).
 - Scheduled/draft articles never appear.
 
+## Clarifications
+
+### Session 2026-09-26
+
+- Q: Article content for launch? → A: Six demo articles (uk/en, 300–500 words, headings/lists/quote) seeded and marked as demo for the client to replace.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Routes `/news`, `/news/[slug]` (+ `/en/...`) with SWR caching and inclusion in `sitemap.xml` with `lastmod` = updatedAt.

@@ -33,6 +33,13 @@ The volume slider (0–100, shows "%") changes volume immediately and is remembe
 - Mobile ≤ 600px → layout per prototype (single column, smaller art, "На сайт" text hidden).
 - localStorage unavailable → default volume 70.
 
+## Clarifications
+
+### Session 2026-09-26
+
+- Q: Real stream URLs? → A: Taken from the current novaline.net radio page (Icecast at stream.novaline.net.ua).
+- Q: Photos? → A: Gradients; CMS images override.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Route `/radio` (+ `/en/radio`) inside a minimal layout (logo + "На сайт" back link) as in the prototype, not the full landing shell.
@@ -47,5 +54,6 @@ The volume slider (0–100, shows "%") changes volume immediately and is remembe
 
 ## Assumptions
 
-- [NEEDS CLARIFICATION: real NovaLine stream URLs — the prototype uses SomaFM Groove Salad placeholders, which must not ship to production.]
-- Background and artwork photos are replaced with licensed images uploaded to the CMS (prototype uses Unsplash URLs).
+- Streams (found on novaline.net/home/radio-2): `https://stream.novaline.net.ua/Novaline_{128,192,256,320}` (audio/mpeg, CORS `*`); the UI offers 320/192/128. Icecast `status-json.xsl` provides the live track title ("now playing").
+- Background and artwork use brand gradients by default; photos uploaded to the CMS replace them. Nothing is hot-linked from Unsplash.
+- The CMS `radio.indexable` flag controls noindex/sitemap.

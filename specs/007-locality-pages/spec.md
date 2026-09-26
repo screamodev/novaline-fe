@@ -37,6 +37,12 @@ Someone googles "інтернет Пісочин" and lands on `/internet/pisoch
 - Duplicate names → slugs disambiguated per 001.
 - Thin-content risk → minimum unique content: intro text, neighbourhood list, nearby localities, plans; pages without coordinates still valid.
 
+## Clarifications
+
+### Session 2026-09-26
+
+- Q: Source of page text? → A: Template built from real data (district, neighbourhood prices, nearest localities, plans, map); `nameLocative` seeded for all settlements; CMS `intro`/`seo` override the template.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Routes `/internet`, `/internet/[slug]` (+ `/en`), SWR cache 5 min, included in sitemap.
