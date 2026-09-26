@@ -2,6 +2,7 @@
 import type { HomeVM } from '#shared/types/home'
 
 defineProps<{ data: HomeVM['payment'] }>()
+const { t } = useI18n()
 const open = ref(0)
 const toggle = (i: number) => (open.value = open.value === i ? -1 : i)
 </script>
@@ -56,6 +57,10 @@ const toggle = (i: number) => (open.value = open.value === i ? -1 : i)
           <ol class="flex list-decimal flex-col gap-2.5 pl-5">
             <li v-for="step in method.steps" :key="step" class="text-[14.5px] leading-[1.6] text-ink">{{ step }}</li>
           </ol>
+          <BaseButton v-if="method.url" :href="method.url" target="_blank" rel="noopener" size="sm" class="mt-5">
+            {{ t('payment.payOnline') }}
+            <AppIcon name="arrowRight" :size="16" />
+          </BaseButton>
         </div>
       </div>
     </div>

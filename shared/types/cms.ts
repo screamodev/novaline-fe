@@ -39,6 +39,7 @@ export interface StrapiGlobal {
   email?: string | null
   socials?: { network: SocialNetwork; url: string }[] | null
   cabinetUrl?: string | null
+  offerDocument?: StrapiMedia | null
   footerTagline?: string | null
   copyright?: string | null
   currencyLabel?: string | null
@@ -89,6 +90,8 @@ export interface GlobalVM {
   email: string | null
   socials: { network: SocialNetwork; url: string }[]
   cabinetUrl: string | null
+  /** Public offer agreement (PDF): `/uploads/…` (proxied to Strapi) or an absolute URL. */
+  offerUrl: string | null
   footerTagline: string
   copyright: string
   currencyLabel: string

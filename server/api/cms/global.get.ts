@@ -9,6 +9,7 @@ const getGlobal = cachedCms('global', async (locale: string) => {
       'populate[socials]': true,
       'populate[defaultSeo][populate]': 'ogImage',
       'populate[logo]': true,
+      'populate[offerDocument]': true,
     },
     parseLocale(locale),
   )

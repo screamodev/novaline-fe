@@ -34,7 +34,8 @@
   "footer": {
     "phones": "Phones",
     "email": "Email",
-    "coverage": "Coverage: all localities"
+    "coverage": "Coverage: all localities",
+    "offer": "Public offer agreement"
   },
   "fab": {
     "assistant": "Ask the assistant",
@@ -222,5 +223,8 @@
     "pause": "Pause",
     "volume": "Volume",
     "error": "The stream is temporarily unavailable. Try another quality or later."
+  },
+  "payment": {
+    "payOnline": "Pay online"
   }
 }

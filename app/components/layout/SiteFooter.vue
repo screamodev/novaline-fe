@@ -73,6 +73,9 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
           <a v-if="global?.cabinetUrl" :href="global.cabinetUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white max-sm:py-[11px]">
             {{ t('topbar.cabinet') }}
           </a>
+          <a v-if="global?.offerUrl" :href="global.offerUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white max-sm:py-[11px]">
+            {{ t('footer.offer') }}
+          </a>
         </nav>
       </div>
     </div>

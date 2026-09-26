@@ -91,6 +91,7 @@ export interface PaymentMethodVM {
   name: string
   meta: string
   steps: string[]
+  url: string | null
 }
 
 export interface ArticleCardVM {

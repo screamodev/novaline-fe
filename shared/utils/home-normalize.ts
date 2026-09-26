@@ -146,6 +146,7 @@ export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday
     name: str(m.name),
     meta: str(m.meta),
     steps: texts(m.steps),
+    url: opt(m.url),
   }))
 
   const articles: ArticleCardVM[] = raw.articles.map(toArticleCard)

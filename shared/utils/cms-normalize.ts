@@ -38,6 +38,8 @@ export function normalizeGlobal(raw: StrapiGlobal | null, mediaBase: string): Gl
     email: g.email || null,
     socials: (g.socials ?? []).filter((s) => s.url),
     cabinetUrl: g.cabinetUrl || null,
+    // Local uploads stay relative: the browser fetches them via the /uploads proxy route.
+    offerUrl: g.offerDocument?.url || null,
     footerTagline: g.footerTagline ?? '',
     copyright: g.copyright ?? '',
     currencyLabel: g.currencyLabel ?? '',
