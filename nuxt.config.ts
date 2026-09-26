@@ -18,6 +18,9 @@ export default defineNuxtConfig({
 
   css: ['~/assets/css/main.css'],
 
+  // Components are referenced by file name (e.g. <SiteHeader>, <BaseButton>) regardless of folder.
+  components: [{ path: '~/components', pathPrefix: false }],
+
   app: {
     head: {
       htmlAttrs: { lang: 'uk' },
@@ -42,7 +45,6 @@ export default defineNuxtConfig({
     openaiModel: 'gpt-4o-mini',
     public: {
       siteUrl,
-      strapiMediaUrl: 'http://localhost:1337',
     },
   },
 
@@ -71,12 +73,18 @@ export default defineNuxtConfig({
   },
 
   image: {
-    domains: [new URL(process.env.NUXT_PUBLIC_STRAPI_MEDIA_URL || 'http://localhost:1337').host],
+    // CMS media is fetched server-side by IPX from Strapi: `cms` inside Docker, `localhost` on the host.
+    domains: ['localhost', 'cms'],
     format: ['avif', 'webp'],
   },
 
+  // Indexing is allowed only when NUXT_SITE_ENV=production (nuxt-site-config), so dev/staging stay out of search.
   robots: {
     allow: '/',
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
   },
 
   tailwindcss: {

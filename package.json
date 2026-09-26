@@ -8,7 +8,9 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "typecheck": "nuxt typecheck"
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "lint:colors": "node scripts/lint-colors.mjs"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
@@ -28,6 +30,7 @@
     "@types/leaflet": "^1.9.22",
     "@types/node": "^26.6.2",
     "typescript": "^5.9.3",
+    "vitest": "^5.0.2",
     "vue-tsc": "^3.3.11"
   },
   "packageManager": "pnpm@11.9.0"

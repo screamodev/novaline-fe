@@ -22,3 +22,38 @@
     @apply bg-violet text-white;
   }
 }
+
+@layer components {
+  .container-page {
+    @apply mx-auto w-full max-w-container px-7 max-sm:px-[18px];
+  }
+  .section-anchor {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* Rise-on-view: content stays visible without JS; hidden only once the client script marks <html class="js">. */
+html.js .reveal:not(.is-in) {
+  opacity: 0;
+  transform: translateY(18px);
+}
+html.js .reveal.is-in {
+  @apply animate-rise;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  html.js .reveal:not(.is-in) {
+    opacity: 1;
+    transform: none;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

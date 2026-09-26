@@ -1,14 +1,14 @@
 <script setup lang="ts">
-// Placeholder until feature 003 (landing-sections) is implemented per spec.
+// Landing sections arrive with feature 003; this page already exercises the shell, SEO and CMS data.
 const { t } = useI18n()
+const { data: global } = useGlobal()
+useSeo()
 </script>
 
 <template>
-  <main class="mx-auto flex min-h-screen max-w-container flex-col items-start justify-center gap-6 px-7">
-    <img src="/images/novaline-logo.svg" alt="NovaLine" class="h-[50px] w-auto">
-    <h1 class="text-h1 text-navy">
-      NovaLine <span class="text-violet">PON</span>
-    </h1>
-    <p class="text-lg text-muted">{{ t('brand_tag') }}</p>
-  </main>
+  <section class="container-page flex min-h-[60vh] flex-col items-start justify-center gap-6 py-[96px]">
+    <h1 class="text-h1 text-navy">NovaLine</h1>
+    <p class="max-w-[520px] text-[18px] leading-[1.6] text-muted">{{ t('meta.description') }}</p>
+    <p class="text-[14px] text-muted">{{ global?.footerTagline }}</p>
+  </section>
 </template>

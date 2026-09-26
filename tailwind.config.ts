@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss'
-import { alpha, onDark, palette } from './app/theme/colors'
+import { alpha, gradients, onDark, palette, shadows } from './app/theme/colors'
 
 export default <Partial<Config>>{
   content: [
@@ -26,8 +26,9 @@ export default <Partial<Config>>{
         bg: { DEFAULT: palette.bg, hero: palette.hero },
         card: palette.white,
         line: { DEFAULT: alpha.line, dark: alpha.lineOnDark, 'dark-strong': alpha.lineOnDarkStrong },
-        glass: alpha.glassOnDark,
+        glass: { DEFAULT: alpha.glassOnDark, strong: alpha.glassOnDarkStrong, line: alpha.lineOnDarkSoft },
         overlay: alpha.overlay,
+        header: alpha.headerGlass,
         success: { DEFAULT: palette.success, ink: palette.successInk, soft: alpha.successSoft },
         'on-dark': onDark,
         viber: palette.viber,
@@ -51,12 +52,7 @@ export default <Partial<Config>>{
         '3xl': '24px',
         '4xl': '28px',
       },
-      boxShadow: {
-        card: '0 20px 50px -24px rgba(45,40,120,.35)',
-        popular: '0 30px 70px -30px rgba(60,40,140,.6)',
-        float: '0 22px 44px -20px rgba(33,30,72,.5)',
-        lead: '0 40px 90px -40px rgba(90,50,200,.6)',
-      },
+      boxShadow: shadows,
       screens: {
         // Prototype breakpoints (max-width) mapped to min-width equivalents.
         xs: '521px',
@@ -66,6 +62,7 @@ export default <Partial<Config>>{
         lg: '981px',
         xl: '1081px',
       },
+      backgroundImage: gradients,
       keyframes: {
         'nl-rise': { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'none' } },
         'nl-pulse': {

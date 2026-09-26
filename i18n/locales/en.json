@@ -1,7 +1,55 @@
 {
   "meta": {
-    "title": "NovaLine — high-speed PON internet",
-    "description": "Fiber straight to your home or office. A stable connection, backup power and 24/7 support."
+    "title": "NovaLine — high-speed PON fibre internet",
+    "description": "Fibre straight to your home or office. A stable connection, backup power and 24/7 support."
   },
-  "brand_tag": "Reliable internet connection"
+  "nav": {
+    "services": "Services",
+    "coverage": "Coverage & plans",
+    "plans": "Plans",
+    "tv": "Television",
+    "promos": "Offers",
+    "news": "News",
+    "datacenter": "Data centre",
+    "shop": "Shop",
+    "payment": "Payment",
+    "about": "About",
+    "lead": "Request",
+    "more": "More",
+    "radio": "Radio"
+  },
+  "cta": {
+    "order": "Order now"
+  },
+  "topbar": {
+    "cabinet": "My account",
+    "viber": "We are on Viber"
+  },
+  "menu": {
+    "open": "Menu",
+    "close": "Close",
+    "title": "Sections",
+    "phones": "Our phone numbers"
+  },
+  "footer": {
+    "phones": "Phones",
+    "email": "Email"
+  },
+  "fab": {
+    "assistant": "Ask the assistant",
+    "callback": "Request a callback"
+  },
+  "a11y": {
+    "language": "Site language",
+    "mainNav": "Main navigation",
+    "footerNav": "Footer navigation",
+    "skip": "Skip to content"
+  },
+  "error": {
+    "notFoundTitle": "Page not found",
+    "notFoundText": "It may have moved, or the address was mistyped.",
+    "serverTitle": "Service temporarily unavailable",
+    "serverText": "We are already on it. Please refresh in a minute or give us a call.",
+    "home": "Back to home"
+  }
 }
