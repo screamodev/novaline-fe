@@ -9,6 +9,8 @@ export interface IconDef {
 
 export const ICONS = {
   arrowRight: { mode: 'stroke', body: '<path d="M5 12h14M13 6l6 6-6 6"/>' },
+  arrowLeft: { mode: 'stroke', body: '<path d="M19 12H5M11 6 5 12l6 6"/>' },
+  volume: { mode: 'stroke', body: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/>' },
   play: { mode: 'fill', body: '<path d="M8 5v14l11-7z"/>' },
   pause: { mode: 'fill', body: '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>' },
   key: { mode: 'stroke', body: '<circle cx="8" cy="15" r="4"/><path d="M10.85 12.15 19 4M18 5l2 2M15 8l2 2"/>' },

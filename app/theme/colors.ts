@@ -20,6 +20,8 @@ export const palette = {
   navyDeep: '#100E2C',
   navyPanel: '#17153A',
   navyPanel2: '#241F52',
+  radioNight: '#181436',
+  radioNightDeep: '#120F2A',
   ink: '#211E48',
   muted: '#6B688F',
   bg: '#F5F4FB',
@@ -41,6 +43,7 @@ export const onDark = {
   label: '#DAD8F0',
   feature: '#E4E2F5',
   coral: '#F3C6D5',
+  pink: '#F3A9C1',
 } as const
 
 /** Translucent colours (borders, overlays, glows). */
@@ -80,6 +83,8 @@ export const shadows = {
   menu: '0 24px 60px -20px rgba(33,30,72,.4)',
   dialog: '0 40px 90px -30px rgba(20,18,50,.6)',
   dropdown: '0 20px 44px -18px rgba(10,8,40,.7)',
+  'radio-card': '0 40px 90px -40px rgba(0,0,0,.7)',
+  'radio-art': '0 16px 34px -14px rgba(0,0,0,.7)',
   'map-tooltip': '0 8px 22px -8px rgba(0,0,0,.7)',
 } as const
 
@@ -97,6 +102,10 @@ export const gradients = {
   'popular-card': `linear-gradient(160deg, ${palette.navy}, ${palette.violetDeep})`,
   'lead-card': `linear-gradient(135deg, ${palette.violet}, ${palette.violetMid} 60%, ${palette.coral})`,
   'map-panel': `linear-gradient(160deg, ${palette.navyPanel}, ${palette.navyPanel2})`,
+  'radio-bg': `linear-gradient(180deg, ${withAlpha(palette.radioNight, 0.78)}, ${withAlpha(palette.radioNight, 0.86)} 40%, ${withAlpha(palette.radioNightDeep, 0.96)}), radial-gradient(900px 500px at 82% 8%, ${withAlpha(palette.coral, 0.28)}, transparent 55%), radial-gradient(800px 520px at 10% 90%, ${withAlpha(palette.violet, 0.3)}, transparent 55%)`,
+  'radio-base': `linear-gradient(160deg, ${palette.navy2}, ${palette.radioNightDeep})`,
+  'radio-art': `linear-gradient(160deg, ${withAlpha(palette.violet, 0.9)}, ${withAlpha(palette.coral, 0.85)})`,
+  'radio-art-tint': `linear-gradient(160deg, ${withAlpha(palette.violet, 0.35)}, ${withAlpha(palette.coral, 0.35)})`,
   'plans-bg': `linear-gradient(180deg, ${palette.white}, ${palette.bg})`,
 } as const
 

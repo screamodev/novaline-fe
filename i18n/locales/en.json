@@ -212,5 +212,14 @@
     "serviceName": "Fibre internet {place}",
     "more": "More about internet {place}",
     "directoryLink": "All localities"
+  },
+  "radio": {
+    "back": "Back to site",
+    "nowPlaying": "Now playing",
+    "quality": "Stream quality",
+    "play": "Play",
+    "pause": "Pause",
+    "volume": "Volume",
+    "error": "The stream is temporarily unavailable. Try another quality or later."
   }
 }

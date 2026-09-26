@@ -23,7 +23,14 @@ if (article.value.locale !== locale.value) {
   await navigateTo(localePath(target), { redirectCode: target === '/news' ? 302 : 301 })
 }
 
-// Language switcher + hreflang use the translated slug.
+// hreflang (i18n params) and the language switch (alternate paths) use the translated slug.
+const localePathFor = useLocalePath()
+useAlternatePaths().value = {
+  [article.value.locale]: localePathFor(`/news/${article.value.slug}`, article.value.locale as 'uk' | 'en'),
+  ...(article.value.alternate
+    ? { [article.value.alternate.locale]: localePathFor(`/news/${article.value.alternate.slug}`, article.value.alternate.locale as 'uk' | 'en') }
+    : { [article.value.locale === 'uk' ? 'en' : 'uk']: localePathFor('/news', article.value.locale === 'uk' ? 'en' : 'uk') }),
+}
 const setI18nParams = useSetI18nParams()
 setI18nParams({
   [article.value.locale]: { slug: article.value.slug },

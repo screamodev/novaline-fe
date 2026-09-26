@@ -9,6 +9,8 @@ const props = defineProps<{
   selected: string
   /** Start centred on this settlement instead of the regional overview. */
   focus?: SettlementEntry | null
+  /** Heading level of the map title, to keep the document outline valid where it is used. */
+  titleTag?: 'h2' | 'h3'
 }>()
 const emit = defineEmits<{ pick: [slug: string] }>()
 const { t } = useI18n()
@@ -32,7 +34,7 @@ const center = computed(() => (props.focus?.lat != null && props.focus.lng != nu
 <template>
   <div class="relative overflow-hidden rounded-3xl border border-line-dark bg-map-panel p-[22px] max-sm:p-4">
     <div class="flex items-center justify-between gap-3">
-      <h3 class="font-display text-[14px] font-semibold text-white">{{ copy.mapTitle }}</h3>
+      <component :is="titleTag ?? 'h3'" class="font-display text-[14px] font-semibold text-white">{{ copy.mapTitle }}</component>
       <span v-if="copy.nodesCount" class="rounded-full border border-coral/40 bg-coral/20 px-[11px] py-[5px] text-[11.5px] font-bold text-white">
         {{ copy.nodesCount }}+ {{ copy.nodesLabel }}
       </span>

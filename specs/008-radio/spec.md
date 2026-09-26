@@ -25,7 +25,7 @@ On `/radio` the visitor presses the large coral play button; the stream starts, 
 
 ### User Story 2 - Visitor adjusts volume and quality (Priority: P2)
 
-The volume slider (0–100, shows "%") changes volume immediately and is remembered in `localStorage`; quality buttons (HQ 320 / Standard 128 / Economy 64 kbps) switch the source, continuing playback if playing.
+The volume slider (0–100, shows "%") changes volume immediately and is remembered in `localStorage`; quality buttons (HQ 320 / Standard 192 / Economy 128 kbps) switch the source, continuing playback if playing.
 
 ### Edge Cases
 

@@ -125,3 +125,34 @@ html.js .reveal.is-in {
     @apply border-l-4 border-violet pl-4 text-muted;
   }
 }
+
+/* ---------- Radio volume slider ---------- */
+.nl-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: theme('colors.white / 20%');
+  outline: none;
+}
+.nl-range:focus-visible {
+  outline: 2px solid theme('colors.violet.2');
+  outline-offset: 4px;
+}
+.nl-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: theme('colors.white');
+  cursor: pointer;
+  box-shadow: theme('boxShadow.pill');
+}
+.nl-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border: 0;
+  border-radius: 50%;
+  background: theme('colors.white');
+  cursor: pointer;
+}

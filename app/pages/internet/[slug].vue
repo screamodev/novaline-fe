@@ -96,7 +96,7 @@ useSchemaOrg([
             </BaseButton>
           </div>
         </div>
-        <CoverageMapPanel :copy="home.coverage" :index="index" :selected="entry.slug" :focus="entry" @pick="(s: string) => navigateTo(localePath(`/internet/${s}`))" />
+        <CoverageMapPanel :copy="home.coverage" :index="index" :selected="entry.slug" :focus="entry" title-tag="h2" @pick="(s: string) => navigateTo(localePath(`/internet/${s}`))" />
       </div>
 
       <NeighbourhoodPrices class="mt-14" :settlement="entry" :plans="coveragePlans" :place="place" />

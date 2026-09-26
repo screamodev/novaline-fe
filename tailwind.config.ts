@@ -59,6 +59,7 @@ export default <Partial<Config>>{
       backgroundImage: gradients,
       keyframes: {
         'nl-rise': { from: { opacity: '0', transform: 'translateY(18px)' }, to: { opacity: '1', transform: 'none' } },
+        eq: { '0%,100%': { transform: 'scaleY(.28)' }, '50%': { transform: 'scaleY(1)' } },
         'nl-pulse': {
           '0%,100%': { transform: 'scale(1)', opacity: '.85' },
           '50%': { transform: 'scale(1.35)', opacity: '1' },
