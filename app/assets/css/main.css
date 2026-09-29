@@ -15,14 +15,6 @@
   line-gap-override: 0%;
 }
 
-@font-face {
-  font-family: 'Unbounded Fallback';
-  src: local('Arial');
-  size-adjust: 134.5893%;
-  ascent-override: 73.9286%;
-  descent-override: 18.2035%;
-  line-gap-override: 0%;
-}
 
 @layer base {
   html {
@@ -35,7 +27,7 @@
   h1,
   h2,
   h3 {
-    @apply m-0 font-display font-bold leading-[1.05] tracking-[-0.01em];
+    @apply m-0 font-display font-extrabold leading-[1.1] tracking-[-0.02em];
   }
   a {
     @apply text-violet no-underline hover:text-coral;

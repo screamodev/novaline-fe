@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const { t } = useI18n()
-const localePath = useLocalePath()
 const { data: global } = useGlobal()
 </script>
 
@@ -27,12 +26,6 @@ const { data: global } = useGlobal()
         </a>
       </div>
       <div class="flex items-center gap-2 max-sm:gap-1.5">
-        <NuxtLink
-          :to="localePath('/radio')"
-          class="tap-target inline-flex items-center gap-[7px] rounded-full border border-glass-line px-3 py-[5px] font-semibold text-on-dark hover:text-white max-[400px]:hidden"
-        >
-          <AppIcon name="play" :size="13" />{{ t('nav.radio') }}
-        </NuxtLink>
         <a
           v-if="global?.cabinetUrl"
           :href="global.cabinetUrl"

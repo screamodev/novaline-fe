@@ -36,10 +36,7 @@ useSeo(() => ({
   <section class="container-page py-[60px] max-sm:py-10">
     <Breadcrumbs :items="[{ label: t('breadcrumbs.home'), to: localePath('/') }, { label: t('breadcrumbs.news') }]" />
     <div class="mt-6">
-      <div v-if="heading?.kicker" class="mb-3.5 flex items-center gap-3">
-        <span class="h-1 w-[26px] rounded-sm bg-coral" aria-hidden="true" />
-        <span class="text-kicker font-bold uppercase text-violet">{{ heading.kicker }}</span>
-      </div>
+      <div v-if="heading?.kicker" class="mb-3.5 text-kicker font-bold uppercase text-violet">{{ heading.kicker }}</div>
       <h1 class="text-h2 text-navy">{{ heading?.title ?? t('breadcrumbs.news') }}</h1>
       <p v-if="heading?.subtitle" class="mt-3.5 max-w-[560px] text-[16.5px] leading-[1.6] text-muted">{{ heading.subtitle }}</p>
     </div>

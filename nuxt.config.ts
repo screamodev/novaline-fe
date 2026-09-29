@@ -81,8 +81,7 @@ export default defineNuxtConfig({
     // No font preloads: metric fallbacks (main.css) prevent reflow, and the hero image gets the bandwidth first.
     defaults: { subsets: ['cyrillic', 'latin'], preload: false },
     families: [
-      { name: 'Manrope', provider: 'google', weights: [400, 500, 600, 700] },
-      { name: 'Unbounded', provider: 'google', weights: [600, 700, 800] },
+      { name: 'Manrope', provider: 'google', weights: [400, 500, 600, 700, 800] },
     ],
   },
 

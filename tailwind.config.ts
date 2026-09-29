@@ -35,13 +35,14 @@ export default <Partial<Config>>{
       },
       fontFamily: {
         // '<Font> Fallback' = Arial size-adjusted to the web font (main.css), so text does not reflow when it swaps in.
-        display: ['Unbounded', 'Unbounded Fallback', 'system-ui', 'sans-serif'],
+        // Headings and body share Manrope (the client asked for a restrained grotesque instead of the wide Unbounded).
+        display: ['Manrope', 'Manrope Fallback', 'system-ui', 'sans-serif'],
         body: ['Manrope', 'Manrope Fallback', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        h1: ['clamp(38px, 4.6vw, 60px)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
-        h2: ['clamp(28px, 3.4vw, 42px)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
-        'h2-sm': ['clamp(26px, 3vw, 38px)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
+        h1: ['clamp(38px, 4.6vw, 60px)', { lineHeight: '1.08', letterSpacing: '-0.025em' }],
+        h2: ['clamp(28px, 3.4vw, 42px)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        'h2-sm': ['clamp(26px, 3vw, 38px)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
         kicker: ['13px', { letterSpacing: '0.06em', lineHeight: '1.2' }],
       },
       maxWidth: {

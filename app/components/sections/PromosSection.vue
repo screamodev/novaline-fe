@@ -12,7 +12,8 @@ const apply = (p: PromoVM) => setLeadContext({ kind: 'promo', key: p.key, label:
 <template>
   <section id="promos" class="section-anchor container-page reveal py-[84px] max-sm:py-[52px]" aria-labelledby="promos-title">
     <SectionHeading v-if="data.heading" v-bind="data.heading" heading-id="promos-title" title-width="max-w-[620px]" />
-    <div class="mt-9 grid grid-cols-2 gap-[22px] max-md:grid-cols-1">
+    <!-- A single running promotion gets one readable-width card instead of half a grid. -->
+    <div class="mt-9 grid gap-[22px]" :class="data.items.length > 1 ? 'grid-cols-2 max-md:grid-cols-1' : 'max-w-[760px] grid-cols-1'">
       <article v-for="promo in data.items" :key="promo.key" class="flex flex-col overflow-hidden rounded-[22px] border border-line bg-white">
         <div class="h-1 rounded-full" :class="promo.accent === 'coral' ? 'bg-coral' : 'bg-violet'" />
         <div class="flex flex-1 flex-col p-[30px] max-sm:p-6">

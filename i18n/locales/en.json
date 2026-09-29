@@ -1,11 +1,11 @@
 {
   "meta": {
     "title": "NovaLine — high-speed PON fibre internet",
-    "description": "Fibre straight to your home or office. A stable connection, backup power and 24/7 support."
+    "description": "Fibre straight to your home or office. A stable connection and backup power."
   },
   "nav": {
     "services": "Services",
-    "coverage": "Coverage & plans",
+    "coverage": "Coverage",
     "plans": "Plans",
     "tv": "Television",
     "promos": "Offers",
@@ -194,7 +194,7 @@
     "directorySearch": "Find a locality",
     "h1": "Internet {place} — GPON fibre from NovaLine",
     "placeFallback": "in {name}",
-    "intro": "NovaLine brings fibre internet {place} ({district}, {region}). {technology} runs fibre straight into your building — a stable {speed}, backup power at the nodes and 24/7 support.",
+    "intro": "NovaLine brings fibre internet {place} ({district}, {region}). {technology} runs fibre straight into your building — a stable {speed} and backup power at the nodes.",
     "introNeigh": "Plan prices depend on the neighbourhood — see the table below for each one.",
     "introPlans": "Private-home plans start at {min} UAH/mo, with the first month of internet free on connection.",
     "facts": {
@@ -210,7 +210,7 @@
     "nearbyTitle": "Also connected nearby",
     "nearbyLink": "Internet {place}",
     "seoTitle": "Internet {place}: GPON fibre from {min} UAH/mo {'|'} NovaLine",
-    "seoDescription": "Fibre internet {place} ({district}). {speed}, plans from {min} UAH/mo, backup power and 24/7 support. Check your address and leave a request.",
+    "seoDescription": "Fibre internet {place} ({district}). {speed}, plans from {min} UAH/mo and backup power. Check your address and leave a request.",
     "serviceName": "Fibre internet {place}",
     "more": "More about internet {place}",
     "directoryLink": "All localities"

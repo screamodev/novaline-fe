@@ -17,10 +17,7 @@ withDefaults(
 
 <template>
   <div>
-    <div v-if="kicker" class="mb-3.5 flex items-center gap-3">
-      <span class="h-1 w-[26px] rounded-sm bg-coral" aria-hidden="true" />
-      <span class="text-kicker font-bold uppercase" :class="dark ? 'text-violet-2' : 'text-violet'">{{ kicker }}</span>
-    </div>
+    <div v-if="kicker" class="mb-3.5 text-kicker font-bold uppercase" :class="dark ? 'text-violet-2' : 'text-violet'">{{ kicker }}</div>
     <h2 :id="headingId" :class="[titleWidth, size === 'sm' ? 'text-h2-sm' : 'text-h2', dark ? 'text-white' : 'text-navy']">{{ title }}</h2>
     <p
       v-if="subtitle"

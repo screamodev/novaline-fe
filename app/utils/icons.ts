@@ -52,11 +52,11 @@ export const ICONS = {
   consult: { mode: 'stroke', body: '<path d="M21 15a3 3 0 0 1-3 3H8l-4 3V6a3 3 0 0 1 3-3h11a3 3 0 0 1 3 3z"/><path d="M9 9h6M9 12h4"/>' },
   ip4: {
     mode: 'stroke',
-    body: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><text x="12" y="12" font-size="6" font-family="Unbounded" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">IP</text>',
+    body: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/><text x="12" y="12" font-size="6" font-family="Manrope" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">IP</text>',
   },
   ip6: {
     mode: 'stroke',
-    body: '<path d="M12 2C7 8 7 13 12 22 17 13 17 8 12 2z"/><path d="M4 12h16"/><text x="12" y="13" font-size="5" font-family="Unbounded" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">v6</text>',
+    body: '<path d="M12 2C7 8 7 13 12 22 17 13 17 8 12 2z"/><path d="M4 12h16"/><text x="12" y="13" font-size="5" font-family="Manrope" font-weight="700" fill="currentColor" stroke="none" text-anchor="middle">v6</text>',
   },
 } satisfies Record<string, IconDef>
 

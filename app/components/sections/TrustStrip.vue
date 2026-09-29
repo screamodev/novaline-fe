@@ -9,13 +9,13 @@ const ICON: Record<TrustIcon, IconName> = { support: 'headset', engineer: 'wrenc
   <section v-if="items.length" class="relative">
     <div class="container-page pb-14 pt-10">
       <ul
-        class="grid grid-cols-4 gap-4 rounded-[20px] border border-line bg-white px-7 py-6 shadow-card max-tab:grid-cols-2 max-sm:grid-cols-1"
+        class="grid grid-cols-3 gap-4 rounded-[20px] border border-line bg-white px-7 py-6 shadow-card max-md:grid-cols-1"
       >
         <li
           v-for="(item, i) in items"
           :key="item.title"
           class="flex items-start gap-3.5"
-          :class="i < items.length - 1 && 'tab:border-r tab:border-line tab:pr-4'"
+          :class="i < items.length - 1 && 'md:border-r md:border-line md:pr-4'"
         >
           <AppIcon :name="ICON[item.icon] ?? 'check'" :size="30" :stroke-width="1.8" class="text-coral" />
           <div>
