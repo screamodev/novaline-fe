@@ -31,9 +31,11 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#1F1D46' },
       ],
       link: [
-        { rel: 'icon', type: 'image/svg+xml', href: '/images/novaline-logo.svg' },
-        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'apple-touch-icon', href: '/images/novaline-logo.png' },
+        // The client's own favicon (from novaline.net).
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico', sizes: '48x48' },
+        { rel: 'icon', type: 'image/png', href: '/favicon-32.png', sizes: '32x32' },
+        { rel: 'icon', type: 'image/png', href: '/icon-192.png', sizes: '192x192' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
       ],
     },
   },
