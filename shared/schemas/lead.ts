@@ -34,6 +34,7 @@ const address = {
   district: text(120),
   settlement: text(120),
   neighbourhood: text(120),
+  street: text(200),
 }
 
 export const leadSchema = z.discriminatedUnion('type', [

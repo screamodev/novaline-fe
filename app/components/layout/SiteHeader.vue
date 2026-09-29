@@ -6,6 +6,7 @@ const hidden = useHiddenSections()
 const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const { data: global } = useGlobal()
 const menuOpen = useMobileMenu()
+const { openOrder } = useOrderDialog()
 </script>
 
 <template>
@@ -26,7 +27,7 @@ const menuOpen = useMobileMenu()
         </NuxtLink>
       </nav>
 
-      <BaseButton :to="sectionLink('lead')" variant="coral" pill class="hidden shrink-0 !text-[14.5px] xl:inline-flex">
+      <BaseButton variant="coral" pill class="hidden shrink-0 !text-[14.5px] xl:inline-flex" @click="openOrder()">
         {{ t('cta.order') }}
       </BaseButton>
 

@@ -6,8 +6,8 @@ const { t } = useI18n()
 const fmt = useFormat()
 const sectionLink = useSectionLink()
 const { data: global } = useGlobal()
-const { set: setLeadContext } = useLeadContext()
-const buy = (item: ShopItemVM) => setLeadContext({ kind: 'shop', key: item.key, label: item.name })
+const { openOrder } = useOrderDialog()
+const buy = (item: ShopItemVM) => openOrder({ context: { kind: 'shop', key: item.key, label: item.name } })
 </script>
 
 <template>
@@ -39,7 +39,7 @@ const buy = (item: ShopItemVM) => setLeadContext({ kind: 'shop', key: item.key, 
             <span class="font-display text-[26px] font-extrabold text-navy">{{ fmt.amount(item.price) }}</span>
             <span class="ml-1 text-[13px] text-muted">{{ global?.currencyLabel }}</span>
           </div>
-          <BaseButton :to="sectionLink('lead')" variant="soft" pill size="sm" @click="buy(item)">{{ t('shop.buy') }}</BaseButton>
+          <BaseButton variant="soft" pill size="sm" @click="buy(item)">{{ t('shop.buy') }}</BaseButton>
         </div>
       </li>
     </ul>

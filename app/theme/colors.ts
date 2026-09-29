@@ -85,7 +85,6 @@ export const shadows = {
   dropdown: '0 20px 44px -18px rgba(10,8,40,.7)',
   'radio-card': '0 40px 90px -40px rgba(0,0,0,.7)',
   'radio-art': '0 16px 34px -14px rgba(0,0,0,.7)',
-  'map-tooltip': '0 8px 22px -8px rgba(0,0,0,.7)',
 } as const
 
 /** Gradients built from the palette (section backgrounds, cards, glows). */
@@ -101,7 +100,6 @@ export const gradients = {
   'glow-about': `radial-gradient(700px 400px at 100% 100%, ${withAlpha(palette.violet2, 0.22)}, transparent 60%)`,
   'popular-card': `linear-gradient(160deg, ${palette.navy}, ${palette.violetDeep})`,
   'lead-card': `linear-gradient(135deg, ${palette.violet}, ${palette.violetMid} 60%, ${palette.coral})`,
-  'map-panel': `linear-gradient(160deg, ${palette.navyPanel}, ${palette.navyPanel2})`,
   'radio-bg': `linear-gradient(180deg, ${withAlpha(palette.radioNight, 0.78)}, ${withAlpha(palette.radioNight, 0.86)} 40%, ${withAlpha(palette.radioNightDeep, 0.96)}), radial-gradient(900px 500px at 82% 8%, ${withAlpha(palette.coral, 0.28)}, transparent 55%), radial-gradient(800px 520px at 10% 90%, ${withAlpha(palette.violet, 0.3)}, transparent 55%)`,
   'radio-base': `linear-gradient(160deg, ${palette.navy2}, ${palette.radioNightDeep})`,
   'radio-art': `linear-gradient(160deg, ${withAlpha(palette.violet, 0.9)}, ${withAlpha(palette.coral, 0.85)})`,

@@ -1,6 +1,6 @@
 /** What the visitor clicked before landing on the lead form (plan, TV package, shop item, …). */
 export interface LeadContext {
-  kind: 'plan' | 'addon' | 'tv' | 'promo' | 'shop' | 'datacenter' | 'consultation'
+  kind: 'plan' | 'offer' | 'addon' | 'tv' | 'promo' | 'shop' | 'datacenter' | 'consultation' | 'article' | 'assistant'
   key: string
   label: string
 }

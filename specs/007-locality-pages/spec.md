@@ -58,3 +58,9 @@ Someone googles "інтернет Пісочин" and lands on `/internet/pisoch
 ## Assumptions
 
 - Page count ≈ number of covered settlements (hundreds), acceptable for SWR rendering.
+
+## Revision 2026-09-29 (feature 011)
+
+- Prices come from per-locality **connection offers** (`settlement.offers`; Kharkiv per neighbourhood) imported from the old site. They replace the base plans + neighbourhood modifiers table.
+- No coordinates in the real data: the map is removed, and "nearby" links are other settlements of the same district (FR-004 "6 nearest by distance" is superseded).
+- H1, intro and SEO templates use the offers' technology, top speed and cheapest tariff. No "24/7 support".

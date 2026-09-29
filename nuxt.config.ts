@@ -51,11 +51,6 @@ export default defineNuxtConfig({
       features: {
         assistant: true,
       },
-      // Coverage map tiles (OSM by default; darkened with CSS). Override via NUXT_PUBLIC_MAP_TILE_URL / _ATTRIBUTION.
-      map: {
-        tileUrl: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      },
     },
   },
 

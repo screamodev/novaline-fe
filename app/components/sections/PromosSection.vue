@@ -4,9 +4,8 @@ import type { HomeVM, PromoVM } from '#shared/types/home'
 defineProps<{ data: HomeVM['promos'] }>()
 const { t } = useI18n()
 const fmt = useFormat()
-const sectionLink = useSectionLink()
-const { set: setLeadContext } = useLeadContext()
-const apply = (p: PromoVM) => setLeadContext({ kind: 'promo', key: p.key, label: p.title })
+const { openOrder } = useOrderDialog()
+const apply = (p: PromoVM) => openOrder({ context: { kind: 'promo', key: p.key, label: p.title } })
 </script>
 
 <template>
@@ -34,7 +33,7 @@ const apply = (p: PromoVM) => setLeadContext({ kind: 'promo', key: p.key, label:
               <AppIcon name="calendar" :size="16" :stroke-width="2.1" class="text-coral" />
               {{ t('promo.until') }} <time :datetime="promo.validUntil">{{ fmt.date(promo.validUntil) }}</time>
             </span>
-            <BaseButton :to="sectionLink('lead')" pill size="sm" class="!py-3 !px-5" @click="apply(promo)">{{ t('promo.cta') }}</BaseButton>
+            <BaseButton pill size="sm" class="!py-3 !px-5" @click="apply(promo)">{{ t('promo.cta') }}</BaseButton>
           </div>
         </div>
       </article>

@@ -30,8 +30,6 @@ export interface PlanVM {
   periodLabel: string
   popular: boolean
   features: string[]
-  availableForCoverage: boolean
-  coverageCaption: string | null
 }
 
 export interface AddonVM {
@@ -122,21 +120,13 @@ export interface HomeVM {
     heading: HeadingVM | null
     hint: string | null
     resultTitle: string | null
-    technology: string | null
-    speedValue: string | null
     resultNote: string | null
-    mapTitle: string | null
-    nodesCount: number | null
-    nodesLabel: string | null
-    legendCity: string | null
-    legendVillage: string | null
-    mapHint: string | null
   }
   services: { heading: HeadingVM | null; items: { key: string; icon: ServiceIcon; title: string; description: string }[] }
   plans: {
     heading: HeadingVM | null
-    connectionNote: string | null
-    bySegment: Record<PlanSegment, PlanVM[]>
+    /** Static business plans (home prices depend on the locality, see coverage offers). */
+    business: PlanVM[]
   }
   addons: { heading: HeadingVM | null; items: AddonVM[] }
   tv: {

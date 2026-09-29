@@ -1,15 +1,35 @@
 import { describe, expect, it } from 'vitest'
-import { buildIndex, planPrice, searchSettlements } from '../shared/utils/coverage'
-import type { CoverageTreeVM } from '../shared/types/coverage'
+import { allOffers, buildIndex, districtNeighbours, maxSpeed, minPrice, offersFor, searchSettlements, technologies } from '../shared/utils/coverage'
+import type { CoverageTreeVM, OfferVM } from '../shared/types/coverage'
 
-const s = (slug: string, name: string) => ({ slug, name, nameLocative: null, lat: 1, lng: 2, isRegionalCentre: false, neighbourhoods: [] })
+const offer = (technology: OfferVM['technology'], prices: [number, number][]): OfferVM => ({
+  technology,
+  audience: 'private',
+  tariffs: prices.map(([speed, price]) => ({ speed, price, extra: null })),
+  connectionPrice: 1500,
+  connectionPriceOld: null,
+  connectionPromo: false,
+  note: null,
+  noteEn: null,
+})
+const s = (slug: string, name: string, offers: OfferVM[] = [offer('GPON', [[100, 210], [1000, 270]])]) => ({
+  slug,
+  name,
+  nameLocative: null,
+  lat: null,
+  lng: null,
+  isRegionalCentre: false,
+  offers,
+  neighbourhoods: [] as { name: string; offers: OfferVM[] }[],
+})
+const kharkiv = { ...s('kharkiv', 'Харків', []), neighbourhoods: [{ name: 'Салтівка', offers: [offer('EPON', [[150, 200]])] }] }
 const tree: CoverageTreeVM = {
   settlementCount: 4,
   regions: [
     {
       slug: 'kharkivska',
       name: 'Харківська область',
-      districts: [{ slug: 'kharkivskyi', name: 'Харківський район', settlements: [s('kharkiv', 'Харків'), s('pisochyn', 'Пісочин')] }],
+      districts: [{ slug: 'kharkivskyi', name: 'Харківський район', settlements: [kharkiv, s('pisochyn', 'Пісочин')] }],
     },
     {
       slug: 'sumska',
@@ -36,30 +56,22 @@ describe('coverage index & search', () => {
   })
 })
 
-describe('planPrice', () => {
-  it('applies the neighbourhood modifier and never goes negative', () => {
-    expect(planPrice(270, 30)).toBe(300)
-    expect(planPrice(210, -10)).toBe(200)
-    expect(planPrice(20, -50)).toBe(0)
-    expect(planPrice(null, 30)).toBeNull()
+describe('offers', () => {
+  const [kh, pisochyn] = index
+  it('uses the neighbourhood terms in Kharkiv and nothing until one is chosen', () => {
+    expect(offersFor(kh)).toEqual([])
+    expect(offersFor(kh, kh!.neighbourhoods[0])[0]!.technology).toBe('EPON')
+    expect(offersFor(pisochyn)[0]!.tariffs).toHaveLength(2)
+    expect(offersFor(undefined)).toEqual([])
   })
-})
-
-import { distanceKm, nearestSettlements } from '../shared/utils/coverage'
-
-describe('nearestSettlements', () => {
-  const at = (slug: string, lat: number, lng: number, districtSlug = 'd') =>
-    ({ slug, name: slug, nameLocative: null, lat, lng, isRegionalCentre: false, neighbourhoods: [], regionSlug: 'r', regionName: 'R', districtSlug, districtName: 'D' })
-  const kharkiv = at('kharkiv', 49.9935, 36.2304)
-  const idx = [kharkiv, at('pisochyn', 49.9539, 36.1122), at('poltava', 49.5883, 34.5514), at('dergachi', 50.1069, 36.1181)]
-  it('orders by distance and excludes itself', () => {
-    expect(nearestSettlements(kharkiv, idx, 2).map((s) => s.slug)).toEqual(['pisochyn', 'dergachi'])
+  it('summarises prices, speeds and technologies', () => {
+    const all = [...allOffers(kh!), ...allOffers(pisochyn!)]
+    expect(minPrice(all)).toBe(200)
+    expect(maxSpeed(all)).toBe(1000)
+    expect(technologies(all)).toEqual(['EPON', 'GPON'])
+    expect(minPrice([])).toBeNull()
   })
-  it('computes a sensible distance (Kharkiv–Poltava ≈ 130 km)', () => {
-    expect(Math.round(distanceKm(kharkiv, { lat: 49.5883, lng: 34.5514 }) / 10) * 10).toBe(130)
-  })
-  it('falls back to the same district without coordinates', () => {
-    const noGeo = { ...kharkiv, slug: 'x', lat: null, lng: null }
-    expect(nearestSettlements(noGeo, idx, 2).map((s) => s.slug)).toEqual(['kharkiv', 'pisochyn'])
+  it('links other settlements of the same district', () => {
+    expect(districtNeighbours(pisochyn!, index).map((x) => x.slug)).toEqual(['kharkiv'])
   })
 })

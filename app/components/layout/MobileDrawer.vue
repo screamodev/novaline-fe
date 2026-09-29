@@ -8,6 +8,11 @@ const { data: global } = useGlobal()
 const open = useMobileMenu()
 const panel = ref<HTMLElement | null>(null)
 const close = () => (open.value = false)
+const { openOrder } = useOrderDialog()
+const order = () => {
+  close()
+  openOrder()
+}
 
 useFocusTrap(panel, open, close)
 // Close when navigating (e.g. choosing a section link).
@@ -71,7 +76,7 @@ watch(() => route.fullPath, close)
           </div>
         </div>
 
-        <BaseButton :to="sectionLink('lead')" variant="coral" size="lg" block class="mt-[18px] !rounded-[14px] !shadow-none" @click="close">
+        <BaseButton variant="coral" size="lg" block class="mt-[18px] !rounded-[14px] !shadow-none" @click="order">
           {{ t('cta.order') }}
         </BaseButton>
       </div>

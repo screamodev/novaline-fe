@@ -4,7 +4,7 @@ import type { HomeVM } from '#shared/types/home'
 defineProps<{ hero: HomeVM['hero'] }>()
 const { t } = useI18n()
 const sectionLink = useSectionLink()
-const { set: setLeadContext } = useLeadContext()
+const { openOrder } = useOrderDialog()
 </script>
 
 <template>
@@ -50,11 +50,10 @@ const { set: setLeadContext } = useLeadContext()
           </BaseButton>
           <BaseButton
             v-if="hero.secondaryCta"
-            :to="sectionLink('lead')"
             variant="white"
             size="lg"
             class="!rounded-[14px]"
-            @click="setLeadContext({ kind: 'consultation', key: 'hero', label: hero.secondaryCta })"
+            @click="openOrder({ context: { kind: 'consultation', key: 'hero', label: hero.secondaryCta } })"
           >
             {{ hero.secondaryCta }}
           </BaseButton>

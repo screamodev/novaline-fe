@@ -6,7 +6,7 @@ const { t } = useI18n()
 const fmt = useFormat()
 const sectionLink = useSectionLink()
 const { data: global } = useGlobal()
-const { set: setLeadContext } = useLeadContext()
+const { openOrder } = useOrderDialog()
 
 const category = ref('')
 /** On phones the full list is long; show the first MOBILE_LIMIT channels until expanded (all stay in the HTML). */
@@ -21,7 +21,7 @@ const TIER_CLASS: Record<TvTier, string> = {
   max: 'bg-coral-soft text-coral-strong',
 }
 const categories = computed(() => [{ key: '', name: t('tv.all') }, ...props.data.categories])
-const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label: p.name })
+const order = (p: TvPackageVM) => openOrder({ context: { kind: 'tv', key: p.key, label: p.name } })
 </script>
 
 <template>
@@ -71,14 +71,14 @@ const order = (p: TvPackageVM) => setLeadContext({ kind: 'tv', key: p.key, label
             </li>
           </ul>
           <div class="mt-auto pt-6">
-            <NuxtLink
-              :to="sectionLink('lead')"
-              class="flex justify-center rounded-xl py-3.5 text-[15px] font-bold"
-              :class="pkg.popular ? 'bg-coral-strong text-white hover:text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet hover:text-navy'"
+            <button
+              type="button"
+              class="flex w-full justify-center rounded-xl py-3.5 text-[15px] font-bold"
+              :class="pkg.popular ? 'bg-coral-strong text-white hover:brightness-110' : 'border-[1.5px] border-line bg-bg text-navy hover:border-violet'"
               @click="order(pkg)"
             >
               {{ t('tv.order') }}
-            </NuxtLink>
+            </button>
           </div>
         </article>
       </div>

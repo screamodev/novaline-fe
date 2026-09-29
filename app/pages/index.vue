@@ -12,7 +12,6 @@ const hidden = useHiddenSections()
 function emptySections(h: HomeVM): SectionId[] {
   const out: SectionId[] = []
   if (!h.services.items.length) out.push('services')
-  if (!Object.values(h.plans.bySegment).some((l) => l.length)) out.push('plans')
   if (!h.tv.packages.length && !h.tv.channels.length) out.push('tv')
   if (!h.promos.items.length) out.push('promos')
   if (!h.dataCentre.services.length) out.push('datacenter')
@@ -33,9 +32,8 @@ const h = home.value
 if (h) {
   const offer = (price: number | null, name: string) =>
     price === null ? undefined : { price, priceCurrency: 'UAH', name }
-  const plans = Object.values(h.plans.bySegment).flat()
   useSchemaOrg([
-    ...plans.map((p) =>
+    ...h.plans.business.map((p) =>
       defineService({ '@id': `#service-plan-${p.key}`, name: `${p.name} — ${p.speedLabel}`, serviceType: 'Internet access', offers: offer(p.price.amount, p.name) }),
     ),
     ...h.tv.packages.map((p) =>
@@ -56,7 +54,7 @@ if (h) {
   <div v-if="home">
     <HeroSection :hero="home.hero" />
     <TrustStrip :items="home.trust" />
-    <CoverageSection :copy="home.coverage" :plans="Object.values(home.plans.bySegment).flat()" />
+    <CoverageSection :copy="home.coverage" />
     <ServicesSection v-if="show('services')" :data="home.services" />
     <PlansSection v-if="show('plans')" :data="home.plans" :addons="home.addons" />
     <TvSection v-if="show('tv')" :data="home.tv" />

@@ -90,43 +90,6 @@ html.js .reveal.is-in {
   }
 }
 
-/* ---------- Leaflet on the navy coverage panel (colours via theme tokens) ---------- */
-.nl-map.leaflet-container {
-  background: theme('colors.navy.deep');
-  font-family: inherit;
-}
-/* OSM tiles are light; invert + tint them to the navy palette. */
-.nl-map .leaflet-tile-pane {
-  filter: invert(1) hue-rotate(200deg) saturate(0.55) brightness(0.8) contrast(0.95);
-}
-.nl-map .leaflet-control-attribution {
-  font-size: 9.5px;
-  background: theme('colors.navy.deep / 82%');
-  color: theme('colors.on-dark.dim');
-}
-.nl-map .leaflet-control-attribution a {
-  color: theme('colors.violet.2');
-}
-.nl-map .leaflet-bar a {
-  background: theme('colors.navy.DEFAULT');
-  color: theme('colors.white');
-  border-color: theme('colors.glass.line');
-}
-.nl-map .leaflet-bar a:hover {
-  background: theme('colors.violet.DEFAULT');
-}
-.nl-map .leaflet-tooltip {
-  background: theme('colors.navy.DEFAULT');
-  color: theme('colors.white');
-  border: 1px solid theme('colors.line.dark-strong');
-  font-weight: 600;
-  font-size: 12px;
-  box-shadow: theme('boxShadow.map-tooltip');
-}
-.nl-map .leaflet-tooltip-top::before {
-  border-top-color: theme('colors.line.dark-strong');
-}
-
 /* ---------- CMS rich text (privacy page, articles) ---------- */
 @layer components {
   .rich-text {

@@ -1,25 +1,24 @@
 import { describe, expect, it } from 'vitest'
-import { blocksToParagraphs, groupPlans, kyivToday, normalizeHome, type HomeRaw } from '../shared/utils/home-normalize'
+import { blocksToParagraphs, businessPlans, kyivToday, normalizeHome, type HomeRaw } from '../shared/utils/home-normalize'
 
 const emptyRaw = (): HomeRaw => ({
   page: null, services: [], plans: [], addons: [], tvPackages: [], tvCategories: [], tvChannels: [], promos: [],
   dcServices: [], dcFacts: [], shopItems: [], paymentMethods: [], paymentDetails: null, articles: [],
 })
 
-describe('groupPlans', () => {
-  it('groups by segment and keeps negotiable prices as labels', () => {
-    const g = groupPlans([
+describe('businessPlans', () => {
+  it('keeps only business plans and negotiable prices as labels', () => {
+    const plans = businessPlans([
       { key: 'a', segment: 'private', name: 'Старт', price: '210.00', features: [{ text: 'x' }] },
       { key: 'b', segment: 'business', name: 'Бізнес', price: '450', pricePrefix: 'від' },
       { key: 'c', segment: 'business', name: 'Індивідуально', price: null, priceLabel: 'договірна' },
       { key: 'd', segment: 'unknown', name: '?' },
     ])
-    expect(g.private[0]).toMatchObject({ key: 'a', price: { amount: 210, prefix: null, label: null }, features: ['x'] })
-    expect(g.business.map((p) => p.price)).toEqual([
+    expect(plans.map((p) => p.key)).toEqual(['b', 'c'])
+    expect(plans.map((p) => p.price)).toEqual([
       { amount: 450, prefix: 'від', label: null },
       { amount: null, prefix: null, label: 'договірна' },
     ])
-    expect(g.apartment).toEqual([])
   })
 })
 
@@ -45,7 +44,7 @@ describe('normalizeHome', () => {
     const vm = normalizeHome(emptyRaw(), '', '2026-09-26')
     expect(vm.hero.titleLine1).toBe('')
     expect(vm.services.heading).toBeNull()
-    expect(vm.plans.bySegment.private).toEqual([])
+    expect(vm.plans.business).toEqual([])
   })
 })
 

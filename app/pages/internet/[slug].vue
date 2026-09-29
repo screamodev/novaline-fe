@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { SettlementExtraVM } from '#shared/types/coverage'
-import { nearestSettlements, planPrice } from '#shared/utils/coverage'
+import { allOffers, districtNeighbours, maxSpeed, minPrice, technologies } from '#shared/utils/coverage'
 
 const { t, locale } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const siteUrl = useRuntimeConfig().public.siteUrl
+const { openOrder } = useOrderDialog()
 const slug = computed(() => String(route.params.slug))
 
 const [{ data: home }, { index }, { data: extra }] = await Promise.all([
@@ -17,15 +18,9 @@ const entry = computed(() => index.value.find((s) => s.slug === slug.value))
 if (!home.value || !entry.value) throw createError({ statusCode: 404, statusMessage: 'Locality not found', fatal: true })
 
 const s = entry.value
-const copy = home.value.coverage
 const place = computed(() => entry.value?.nameLocative || t('locality.placeFallback', { name: entry.value?.name }))
-const coveragePlans = computed(() => Object.values(home.value!.plans.bySegment).flat().filter((p) => p.availableForCoverage))
-const minPrice = computed(() => {
-  const mods = entry.value!.neighbourhoods.length ? entry.value!.neighbourhoods.map((n) => n.priceModifier) : [0]
-  const prices = coveragePlans.value.flatMap((p) => mods.map((m) => planPrice(p.price.amount, m) ?? Infinity))
-  return prices.length ? Math.min(...prices) : null
-})
-const nearby = computed(() => nearestSettlements(entry.value!, index.value, 6))
+const offers = computed(() => allOffers(entry.value!))
+const nearby = computed(() => districtNeighbours(entry.value!, index.value, 12))
 
 // The lead form below is prefilled with this locality.
 const leadAddress = useLeadAddress()
@@ -36,10 +31,13 @@ const vars = computed(() => ({
   place: place.value,
   district: entry.value!.districtName,
   region: entry.value!.regionName,
-  technology: copy.technology ?? 'GPON',
-  speed: copy.speedValue ?? '',
-  min: minPrice.value ?? '',
+  technology: technologies(offers.value).join(' / ') || 'GPON',
+  speed: maxSpeed(offers.value) ?? '',
+  min: minPrice(offers.value) ?? '',
 }))
+
+const orderHere = () =>
+  openOrder({ context: { kind: 'offer', key: s.slug, label: t('locality.serviceName', vars.value) }, settlement: s.slug })
 
 useSeo(() => ({
   title: extra.value?.seo.title || t('locality.seoTitle', vars.value),
@@ -57,9 +55,14 @@ useSchemaOrg([
       address: { addressLocality: s.name, addressRegion: s.regionName, addressCountry: 'UA' },
       ...(s.lat != null && s.lng != null ? { geo: { latitude: s.lat, longitude: s.lng } } : {}),
     }),
-    offers: coveragePlans.value
-      .filter((p) => p.price.amount !== null)
-      .map((p) => ({ name: `${p.name} ${p.speedLabel}`, price: planPrice(p.price.amount, 0) ?? 0, priceCurrency: 'UAH', url: `${siteUrl}${route.path}` })),
+    offers: offers.value.flatMap((o) =>
+      o.tariffs.map((tariff) => ({
+        name: `${o.technology} ${tariff.speed} Mbps`,
+        price: tariff.price,
+        priceCurrency: 'UAH',
+        url: `${siteUrl}${route.path}`,
+      })),
+    ),
   }),
 ])
 </script>
@@ -75,37 +78,46 @@ useSchemaOrg([
           { label: entry.name },
         ]"
       />
-      <div class="mt-6 grid grid-cols-[1.1fr_.9fr] items-start gap-10 max-tab:grid-cols-1">
-        <div>
-          <h1 class="text-h2 text-navy">{{ t('locality.h1', vars) }}</h1>
-          <RichText v-if="extra?.intro.length" :blocks="extra.intro" class="mt-5" />
-          <div v-else class="rich-text mt-5">
-            <p>{{ t('locality.intro', vars) }}</p>
-            <p v-if="entry.neighbourhoods.length">{{ t('locality.introNeigh') }}</p>
-            <p v-if="minPrice !== null">{{ t('locality.introPlans', vars) }}</p>
-          </div>
-          <dl class="mt-7 grid grid-cols-2 gap-3 max-sm:grid-cols-1">
-            <div v-for="(value, key) in { technology: vars.technology, speed: vars.speed, district: vars.district, region: vars.region }" :key="key" class="rounded-[14px] border border-line bg-white px-[18px] py-3.5">
-              <dt class="text-[12px] font-semibold text-muted">{{ t(`locality.facts.${key}`) }}</dt>
-              <dd class="font-display text-[16px] font-bold text-navy">{{ value }}</dd>
-            </div>
-          </dl>
-          <div class="mt-7 flex flex-wrap gap-3">
-            <BaseButton href="#lead" variant="coral" size="lg" class="!rounded-[14px] !shadow-none">
-              {{ t('coverage.leave') }}<AppIcon name="arrowRight" :size="17" :stroke-width="2.4" />
-            </BaseButton>
-          </div>
+      <div class="mt-6 max-w-[820px]">
+        <h1 class="text-h2 text-navy">{{ t('locality.h1', vars) }}</h1>
+        <RichText v-if="extra?.intro.length" :blocks="extra.intro" class="mt-5" />
+        <div v-else class="rich-text mt-5">
+          <p>{{ t('locality.intro', vars) }}</p>
+          <p v-if="entry.neighbourhoods.length">{{ t('locality.introNeigh') }}</p>
+          <p v-if="vars.min !== ''">{{ t('locality.introPlans', vars) }}</p>
         </div>
-        <CoverageMapPanel :copy="home.coverage" :index="index" :selected="entry.slug" :focus="entry" title-tag="h2" @pick="(s: string) => navigateTo(localePath(`/internet/${s}`))" />
       </div>
-
-      <NeighbourhoodPrices class="mt-14" :settlement="entry" :plans="coveragePlans" :place="place" />
+      <dl class="mt-7 grid grid-cols-4 gap-3 max-tab:grid-cols-2 max-sm:grid-cols-1">
+        <div
+          v-for="(value, key) in { technology: vars.technology, speed: vars.speed ? t('offer.speed', { speed: vars.speed }) : '', district: vars.district, region: vars.region }"
+          :key="key"
+          class="rounded-[14px] border border-line bg-white px-[18px] py-3.5"
+        >
+          <dt class="text-[12px] font-semibold text-muted">{{ t(`locality.facts.${key}`) }}</dt>
+          <dd class="text-[16px] font-bold text-navy">{{ value }}</dd>
+        </div>
+      </dl>
+      <div class="mt-7">
+        <BaseButton variant="coral" size="lg" class="!rounded-[14px] !shadow-none" @click="orderHere">
+          {{ t('offer.order') }}<AppIcon name="arrowRight" :size="17" :stroke-width="2.4" />
+        </BaseButton>
+      </div>
     </section>
 
-    <PlansSection :data="home.plans" :addons="home.addons" />
+    <section class="container-page pb-14" aria-labelledby="terms-title">
+      <h2 id="terms-title" class="text-[26px] font-extrabold text-navy">{{ t('locality.pricesTitle', { place }) }}</h2>
+      <div v-if="entry.neighbourhoods.length" class="grid items-start gap-x-6 lg:grid-cols-2">
+        <div v-for="n in entry.neighbourhoods" :key="n.name" class="mt-8">
+          <h3 class="text-[19px] font-bold text-navy">{{ n.name }}</h3>
+          <OfferCards class="mt-4" :offers="n.offers" :place="`${entry.name} · ${n.name}`" :settlement="entry.slug" :neighbourhood="n.name" title-tag="h4" stack />
+        </div>
+      </div>
+      <OfferCards v-else class="mt-6" :offers="entry.offers" :place="entry.name" :settlement="entry.slug" />
+      <p class="mt-4 text-[13px] text-muted">{{ t('locality.pricesNote') }}</p>
+    </section>
 
-    <section class="container-page py-14" aria-labelledby="nearby-title">
-      <h2 id="nearby-title" class="font-display text-[22px] font-bold text-navy">{{ t('locality.nearbyTitle') }}</h2>
+    <section v-if="nearby.length" class="container-page pb-14" aria-labelledby="nearby-title">
+      <h2 id="nearby-title" class="text-[22px] font-bold text-navy">{{ t('locality.nearbyTitle') }}</h2>
       <ul class="mt-5 flex flex-wrap gap-3">
         <li v-for="n in nearby" :key="n.slug">
           <NuxtLink :to="localePath(`/internet/${n.slug}`)" class="inline-flex rounded-full border border-line bg-white px-4 py-2.5 text-[14px] font-semibold text-navy hover:border-violet hover:text-violet">

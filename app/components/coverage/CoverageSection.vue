@@ -1,30 +1,16 @@
 <script setup lang="ts">
-import type { HomeVM, PlanVM } from '#shared/types/home'
+import type { HomeVM } from '#shared/types/home'
 
-const props = defineProps<{ copy: HomeVM['coverage']; plans: PlanVM[] }>()
+const props = defineProps<{ copy: HomeVM['coverage'] }>()
 const { t } = useI18n()
-const router = useRouter()
 const route = useRoute()
-const localePath = useLocalePath()
-const { track } = useAnalytics()
 const c = useCoverage()
-const leadAddress = useLeadAddress()
-const leadType = useLeadType()
 
-const coveragePlans = computed(() => props.plans.filter((p) => p.availableForCoverage))
 const hint = computed(() => props.copy.hint?.replace('{count}', String(c.index.value.length)) ?? '')
 
 // Deep link from locality pages: /?settlement=<slug>#coverage
 const deepLink = typeof route.query.settlement === 'string' ? route.query.settlement : ''
 if (deepLink) watch(c.index, (idx) => idx.length && !c.address.value.settlement && c.pickSettlement(deepLink), { immediate: true })
-
-function goLead() {
-  leadAddress.value = { ...c.address.value }
-  leadType.value = 'connect'
-  track('coverage_lead_click', { settlement: c.address.value.settlement })
-  router.push({ path: localePath('/'), hash: '#lead' })
-}
-
 </script>
 
 <template>
@@ -33,8 +19,8 @@ function goLead() {
     <div class="container-page relative py-[76px] max-sm:py-[52px]">
       <SectionHeading v-if="copy.heading" v-bind="copy.heading" dark heading-id="coverage-title" />
 
-      <div class="mt-[34px] grid grid-cols-2 items-start gap-5 max-tab:grid-cols-1">
-        <!-- Left: search + cascading selects + result -->
+      <div class="mt-[34px] grid grid-cols-[minmax(0,5fr)_minmax(0,7fr)] items-start gap-5 max-tab:grid-cols-1">
+        <!-- Left: search + region → district → settlement (→ neighbourhood) -->
         <div class="rounded-3xl border border-line-dark bg-glass p-[26px] backdrop-blur-[8px] max-sm:p-5">
           <div class="flex flex-col gap-3.5">
             <CoverageSearch :index="c.index.value" @pick="c.pickSettlement" />
@@ -74,40 +60,32 @@ function goLead() {
               :placeholder="t('coverage.selectNeighbourhood')"
               :options="c.options.value.neighbourhoods"
               @update:model-value="c.setNeighbourhood"
-            >
-              <template #note>
-                <span class="rounded-full bg-violet-2/[.16] px-2 py-0.5 text-[10.5px] font-semibold text-violet-2">{{ t('coverage.neighbourhoodNote') }}</span>
-              </template>
-            </CoverageSelect>
-            <button
-              type="button"
-              class="mt-1 rounded-xl py-[15px] text-[15.5px] font-bold text-white transition-colors"
-              :class="c.canCheck.value ? 'bg-violet hover:brightness-110' : 'cursor-not-allowed bg-white/[.16]'"
-              :disabled="!c.canCheck.value"
-              @click="c.check"
-            >
-              {{ t('coverage.check') }}
-            </button>
+            />
           </div>
-
-          <CoverageResult
-            v-if="c.resultShown.value"
-            :copy="copy"
-            :plans="coveragePlans"
-            :locality="c.resultLabel.value"
-            :modifier="c.modifier.value"
-            :settlement="c.entry.value"
-            @change="c.reset"
-            @lead="goLead"
-          />
-
           <p v-if="hint" class="mt-4 flex items-center gap-2 text-[13px] text-on-dark-dim">
             <AppIcon name="info" :size="15" class="text-violet-2" />{{ hint }}
           </p>
         </div>
 
-        <!-- Right: coverage map -->
-        <CoverageMapPanel :copy="copy" :index="c.index.value" :selected="c.address.value.settlement" @pick="c.pickSettlement" />
+        <!-- Right: technology and plans for the chosen point -->
+        <CoverageResult
+          v-if="c.complete.value"
+          :copy="copy"
+          :offers="c.offers.value"
+          :locality="c.resultLabel.value"
+          :place="c.placeLabel.value"
+          :settlement="c.entry.value"
+          :neighbourhood="c.neighbourhood.value?.name"
+          @change="c.reset"
+        />
+        <div
+          v-else
+          class="flex min-h-[220px] items-center gap-4 rounded-3xl border border-dashed border-white/[.22] p-[26px] text-[15px] leading-[1.6] text-on-dark-dim max-sm:p-5"
+          role="status"
+        >
+          <AppIcon name="search" :size="26" class="shrink-0 text-violet-2" />
+          <span>{{ c.needsNeighbourhood.value ? t('coverage.pickNeighbourhood') : t('coverage.placeholder') }}</span>
+        </div>
       </div>
     </div>
   </section>

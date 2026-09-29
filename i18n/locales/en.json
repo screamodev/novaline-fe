@@ -63,14 +63,6 @@
   "hero": {
     "speedAlt": "Connection speed"
   },
-  "plans": {
-    "tablist": "Connection type",
-    "segments": {
-      "private": "Private homes",
-      "apartment": "Apartment",
-      "business": "Business"
-    }
-  },
   "tv": {
     "channelsIn": "channels included",
     "order": "Get this package",
@@ -126,13 +118,12 @@
     "selectDistrict": "Select a district",
     "selectSettlement": "Select a settlement",
     "selectNeighbourhood": "Select a neighbourhood",
-    "neighbourhoodNote": "Price depends on the selected neighbourhood",
     "check": "Check",
     "change": "Change address",
     "technology": "Technology",
-    "speed": "Speed",
     "leave": "Leave a request",
-    "mapSkip": "Skip the map"
+    "placeholder": "Choose your locality on the left — the technology, plans and connection price will appear here.",
+    "pickNeighbourhood": "Choose a neighbourhood — terms differ across Kharkiv."
   },
   "lead": {
     "typeConnect": "New connection",
@@ -190,28 +181,26 @@
   },
   "locality": {
     "directoryTitle": "NovaLine coverage",
-    "directoryLead": "Fibre internet is already available in {count} localities. Choose yours to see plans, neighbourhood prices and leave a request.",
+    "directoryLead": "NovaLine internet is already available in {count} localities. Choose yours to see the technology, plans and connection price.",
     "directorySearch": "Find a locality",
-    "h1": "Internet {place} — GPON fibre from NovaLine",
+    "h1": "Internet {place} by NovaLine",
     "placeFallback": "in {name}",
-    "intro": "NovaLine brings fibre internet {place} ({district}, {region}). {technology} runs fibre straight into your building — a stable {speed} and backup power at the nodes.",
-    "introNeigh": "Plan prices depend on the neighbourhood — see the table below for each one.",
-    "introPlans": "Private-home plans start at {min} UAH/mo, with the first month of internet free on connection.",
+    "intro": "NovaLine connects homes {place} ({district}, {region}). Technology: {technology}, speeds up to {speed} Mbps, backup power at the nodes.",
+    "introNeigh": "Connection terms in Kharkiv depend on the neighbourhood — each one is listed below.",
+    "introPlans": "Plans from {min} UAH/mo.",
     "facts": {
       "technology": "Technology",
       "speed": "Speed",
       "district": "District",
       "region": "Region"
     },
-    "pricesTitle": "Prices {place}",
-    "neighbourhood": "Neighbourhood",
-    "base": "Base price",
-    "pricesNote": "Prices in UAH/mo. A manager confirms the final price when processing your request.",
-    "nearbyTitle": "Also connected nearby",
+    "pricesTitle": "Connection terms {place}",
+    "pricesNote": "A manager will confirm the final price when processing your request.",
+    "nearbyTitle": "Other localities in the district",
     "nearbyLink": "Internet {place}",
-    "seoTitle": "Internet {place}: GPON fibre from {min} UAH/mo {'|'} NovaLine",
-    "seoDescription": "Fibre internet {place} ({district}). {speed}, plans from {min} UAH/mo and backup power. Check your address and leave a request.",
-    "serviceName": "Fibre internet {place}",
+    "seoTitle": "Internet {place}: {technology} from {min} UAH/mo {'|'} NovaLine",
+    "seoDescription": "Internet {place} ({district}): {technology}, up to {speed} Mbps, plans from {min} UAH/mo. Check the connection terms and leave a request.",
+    "serviceName": "Internet {place}",
     "more": "More about internet {place}",
     "directoryLink": "All localities"
   },
@@ -241,5 +230,48 @@
       "callback": "Request a call",
       "coverage": "Check coverage"
     }
+  },
+  "offer": {
+    "medium": {
+      "GPON": "Fibre to the home",
+      "EPON": "Fibre to the home",
+      "Ethernet": "Twisted pair",
+      "WiFi": "Wireless"
+    },
+    "audience": {
+      "private": "Private houses",
+      "apartment": "Apartment buildings",
+      "private_apartment": "Houses and apartments"
+    },
+    "speed": "{speed} Mbps",
+    "perMonth": "UAH/mo",
+    "connection": "Connection",
+    "promo": "Special price!",
+    "oldPrice": "Was {price} UAH",
+    "order": "Order",
+    "orderContext": "{place}: {technology} · {audience}",
+    "tariffsLabel": "Plans",
+    "uah": "UAH"
+  },
+  "plansHome": {
+    "title": "Plans for home",
+    "lead": "Home prices depend on your locality and connection technology. Choose your address and we will show the plans available there.",
+    "cta": "Choose your locality",
+    "for": "Plans {place}",
+    "change": "Change locality",
+    "business": "For business"
+  },
+  "order": {
+    "title": "Connection request",
+    "sub": "Leave your contacts — a manager will call you back, confirm the address and agree on the installation time.",
+    "settlement": "Locality",
+    "settlementPh": "Start typing the name",
+    "street": "Street, house",
+    "streetPh": "e.g. 12 Shevchenka St",
+    "optional": "optional",
+    "submit": "Send request",
+    "success": "Thank you! We will call you shortly.",
+    "close": "Close",
+    "about": "You chose"
   }
 }

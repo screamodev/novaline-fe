@@ -43,6 +43,7 @@ function onKey(e: KeyboardEvent) {
       <AppIcon name="search" :size="17" :stroke-width="2.2" class="pointer-events-none absolute left-[15px] top-1/2 -translate-y-1/2 text-violet" />
       <input
         :id="inputId"
+        data-coverage-search
         v-model="query"
         type="text"
         role="combobox"

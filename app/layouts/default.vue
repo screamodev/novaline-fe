@@ -12,5 +12,6 @@
     <SiteFooter />
     <FloatingActions />
     <CallbackDialog />
+    <OrderDialog />
   </div>
 </template>

@@ -65,11 +65,9 @@ describe('buildSystemPrompt', () => {
     periodLabel: 'грн/міс',
     popular: false,
     features: [],
-    availableForCoverage: true,
-    coverageCaption: null,
   })
   const home = {
-    plans: { heading: null, connectionNote: 'Підключення 1500 грн', bySegment: { private: [plan('s', 'Старт', 210)], apartment: [], business: [] } },
+    plans: { heading: null, business: [plan('b', 'Бізнес 500', 450)] },
     addons: { heading: null, items: [] },
     tv: { packages: [] },
     promos: { heading: null, items: [] },
@@ -78,18 +76,37 @@ describe('buildSystemPrompt', () => {
     shop: { items: [] },
   } as unknown as HomeVM
   const global = { phones: [{ display: '+38 (098) 506 06 09' }], email: 'support@novaline.net.ua', cabinetUrl: null, currencyLabel: 'грн', perMonthLabel: 'грн/міс' } as unknown as GlobalVM
+  const gpon = (price: number) => ({
+    technology: 'GPON',
+    audience: 'private',
+    tariffs: [{ speed: 100, price, extra: null }],
+    connectionPrice: 1,
+    connectionPriceOld: null,
+    connectionPromo: true,
+    note: null,
+    noteEn: null,
+  })
   const coverage = {
-    settlementCount: 1,
+    settlementCount: 2,
     regions: [
       {
         slug: 'kh',
         name: 'Харківська область',
-        districts: [{ slug: 'd', name: 'D', settlements: [{ slug: 'kharkiv', name: 'Харків', neighbourhoods: [{ name: 'Салтівка', priceModifier: -10 }] }] }],
+        districts: [
+          {
+            slug: 'd',
+            name: 'Харківський район',
+            settlements: [
+              { slug: 'kharkiv', name: 'Харків', offers: [], neighbourhoods: [{ name: 'Салтівка', offers: [gpon(360)] }] },
+              { slug: 'lypci', name: 'Липці', offers: [gpon(360)], neighbourhoods: [] },
+            ],
+          },
+        ],
       },
     ],
   } as never
 
-  it('grounds the prompt in CMS prices, including precomputed neighbourhood prices', () => {
+  it('grounds the prompt in CMS prices, grouping localities with identical terms', () => {
     const prompt = buildSystemPrompt({
       locale: 'uk',
       today: '2026-09-27',
@@ -98,8 +115,9 @@ describe('buildSystemPrompt', () => {
       coverage,
       settings: normalizeAssistantSettings({ promptAddendum: 'Додаткове правило' }),
     })
-    expect(prompt).toContain('Старт, 150 Мбіт/с: 210 грн/міс')
-    expect(prompt).toContain('Салтівка — Старт 200 грн/міс')
+    expect(prompt).toContain('Бізнес 500, 150 Мбіт/с: 450 грн/міс')
+    expect(prompt).toContain('Харків, мікрорайон Салтівка, Липці (Харківський район)')
+    expect(prompt).toContain('GPON, приватний сектор: 100 Мбіт/с — 360 грн/міс; підключення 1 грн, акційна ціна')
     expect(prompt).toContain('+38 (098) 506 06 09')
     expect(prompt).toContain('Додаткове правило')
     expect(prompt).toContain('[[lead]]')

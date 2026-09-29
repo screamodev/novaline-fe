@@ -7,6 +7,7 @@ const emit = defineEmits<{ close: [] }>()
 const { t, locale } = useI18n()
 const sectionLink = useSectionLink()
 const callbackOpen = useCallbackDialog()
+const { openOrder } = useOrderDialog()
 const { messages, demo, pending, send, restore } = useAssistantChat()
 
 const { data: settings } = useFetch<AssistantPublicVM>('/api/cms/assistant', { query: { locale }, server: false })
@@ -43,7 +44,8 @@ const ACTION_ICON: Record<AssistantAction, IconName> = { lead: 'send', callback:
 async function runAction(action: AssistantAction) {
   emit('close')
   if (action === 'callback') callbackOpen.value = true
-  else await navigateTo(sectionLink(action === 'lead' ? 'lead' : 'coverage'))
+  else if (action === 'lead') openOrder({ context: { kind: 'assistant', key: 'assistant', label: t('assistant.bot') } })
+  else await navigateTo(sectionLink('coverage'))
 }
 
 const onKeydown = (e: KeyboardEvent) => {

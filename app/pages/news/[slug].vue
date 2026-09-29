@@ -7,6 +7,7 @@ const { t, locale } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const sectionLink = useSectionLink()
+const { openOrder } = useOrderDialog()
 const fmt = useFormat()
 const siteUrl = useRuntimeConfig().public.siteUrl
 const slug = computed(() => String(route.params.slug))
@@ -98,7 +99,13 @@ useSchemaOrg([
       <p class="mt-2.5 max-w-[560px] text-[15px] leading-[1.6] text-white/90">{{ t('news.ctaText') }}</p>
       <div class="mt-5 flex flex-wrap gap-3">
         <BaseButton :to="sectionLink('coverage')" variant="white" class="!rounded-[14px]">{{ t('news.ctaCoverage') }}</BaseButton>
-        <BaseButton :to="sectionLink('lead')" variant="coral" class="!rounded-[14px] !shadow-none">{{ t('news.ctaLead') }}</BaseButton>
+        <BaseButton
+          variant="coral"
+          class="!rounded-[14px] !shadow-none"
+          @click="openOrder({ context: { kind: 'article', key: article!.slug, label: article!.title } })"
+        >
+          {{ t('news.ctaLead') }}
+        </BaseButton>
       </div>
     </aside>
 

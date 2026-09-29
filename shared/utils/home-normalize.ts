@@ -77,15 +77,10 @@ const plan = (p: Raw): PlanVM => ({
   periodLabel: str(p.periodLabel),
   popular: !!p.popular,
   features: texts(p.features),
-  availableForCoverage: !!p.availableForCoverage,
-  coverageCaption: opt(p.coverageCaption),
 })
 
-export function groupPlans(plans: Raw[]): Record<PlanSegment, PlanVM[]> {
-  const out = Object.fromEntries(PLAN_SEGMENTS.map((s) => [s, [] as PlanVM[]])) as Record<PlanSegment, PlanVM[]>
-  for (const p of plans) if (PLAN_SEGMENTS.includes(p.segment)) out[p.segment as PlanSegment].push(plan(p))
-  return out
-}
+/** Only business plans are shown statically; home prices come from the coverage offers of the chosen locality. */
+export const businessPlans = (plans: Raw[]): PlanVM[] => plans.filter((p) => p.segment === 'business').map(plan)
 
 export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday()): HomeVM {
   const page = raw.page ?? {}
@@ -171,21 +166,13 @@ export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday
       heading: toHeading(page.coverage?.heading),
       hint: opt(page.coverage?.hint),
       resultTitle: opt(page.coverage?.resultTitle),
-      technology: opt(page.coverage?.technology),
-      speedValue: opt(page.coverage?.speedValue),
       resultNote: opt(page.coverage?.resultNote),
-      mapTitle: opt(page.coverage?.mapTitle),
-      nodesCount: num(page.coverage?.nodesCount),
-      nodesLabel: opt(page.coverage?.nodesLabel),
-      legendCity: opt(page.coverage?.legendCity),
-      legendVillage: opt(page.coverage?.legendVillage),
-      mapHint: opt(page.coverage?.mapHint),
     },
     services: {
       heading: toHeading(page.services),
       items: raw.services.map((s) => ({ key: str(s.key), icon: s.icon, title: str(s.title), description: str(s.description) })),
     },
-    plans: { heading: toHeading(page.plans), connectionNote: opt(page.plansConnectionNote), bySegment: groupPlans(raw.plans) },
+    plans: { heading: toHeading(page.plans), business: businessPlans(raw.plans) },
     addons: { heading: toHeading(page.addons), items: addons },
     tv: {
       heading: toHeading(page.tv),

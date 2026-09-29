@@ -1,5 +1,5 @@
 import type { CoverageTreeVM, SettlementEntry } from '#shared/types/coverage'
-import { buildIndex } from '#shared/utils/coverage'
+import { buildIndex, offersFor } from '#shared/utils/coverage'
 
 export interface AddressSelection {
   region: string
@@ -59,53 +59,44 @@ export function useAddressCascade(address: Ref<AddressSelection>) {
   return { tree, index, entry, neighbourhood, options, labels, setRegion, setDistrict, setSettlement, setNeighbourhood, setBySettlement }
 }
 
-/** State of the coverage check section. */
+/**
+ * State of the coverage check, shared by the coverage section, the "Тарифи" section and the order dialog.
+ * The result appears as soon as the choice is complete (a settlement, plus a neighbourhood in Kharkiv).
+ */
 export function useCoverage() {
   const address = useState<AddressSelection>('coverage-address', emptyAddress)
-  const resultShown = useState('coverage-result', () => false)
   const cascade = useAddressCascade(address)
   const { track } = useAnalytics()
 
   const needsNeighbourhood = computed(() => !!cascade.entry.value?.neighbourhoods.length)
-  const canCheck = computed(() => !!cascade.entry.value && (!needsNeighbourhood.value || !!cascade.neighbourhood.value))
-  const modifier = computed(() => cascade.neighbourhood.value?.priceModifier ?? 0)
+  const complete = computed(() => !!cascade.entry.value && (!needsNeighbourhood.value || !!cascade.neighbourhood.value))
+  const offers = computed(() => (complete.value ? offersFor(cascade.entry.value, cascade.neighbourhood.value) : []))
   const resultLabel = computed(() => {
     const e = cascade.entry.value
     if (!e) return ''
     return `${e.name}${cascade.neighbourhood.value ? ` · ${cascade.neighbourhood.value.name}` : ''}, ${e.districtName}`
   })
+  /** Short place name for order contexts, e.g. "Харків · Салтівка". */
+  const placeLabel = computed(() => {
+    const e = cascade.entry.value
+    return e ? `${e.name}${cascade.neighbourhood.value ? ` · ${cascade.neighbourhood.value.name}` : ''}` : ''
+  })
 
-  const hideResult = () => (resultShown.value = false)
-  const check = () => {
-    if (!canCheck.value) return
-    resultShown.value = true
-    track('coverage_check', { settlement: address.value.settlement, neighbourhood: address.value.neighbourhood })
+  if (import.meta.client) {
+    watch(complete, (done) => done && track('coverage_check', { settlement: address.value.settlement, neighbourhood: address.value.neighbourhood }))
   }
-  const pickSettlement = (slug: string) => {
-    const s = cascade.setBySettlement(slug)
-    resultShown.value = false
-    if (s && !s.neighbourhoods.length) check()
-  }
-  const reset = () => {
-    address.value = { ...address.value, settlement: '', neighbourhood: '' }
-    resultShown.value = false
-  }
+
+  const reset = () => (address.value = { ...address.value, settlement: '', neighbourhood: '' })
 
   return {
     address,
-    resultShown,
     ...cascade,
     needsNeighbourhood,
-    canCheck,
-    modifier,
+    complete,
+    offers,
     resultLabel,
-    setRegion: (v: string) => (cascade.setRegion(v), hideResult()),
-    setDistrict: (v: string) => (cascade.setDistrict(v), hideResult()),
-    setSettlement: (v: string) => (cascade.setSettlement(v), hideResult()),
-    // Changing the neighbourhood keeps a shown result live (prices update in place).
-    setNeighbourhood: cascade.setNeighbourhood,
-    check,
-    pickSettlement,
+    placeLabel,
+    pickSettlement: cascade.setBySettlement,
     reset,
   }
 }

@@ -5,7 +5,7 @@ defineProps<{ data: HomeVM['dataCentre'] }>()
 const { t } = useI18n()
 const fmt = useFormat()
 const sectionLink = useSectionLink()
-const { set: setLeadContext } = useLeadContext()
+const { openOrder } = useOrderDialog()
 </script>
 
 <template>
@@ -41,11 +41,10 @@ const { set: setLeadContext } = useLeadContext()
       </ul>
 
       <BaseButton
-        :to="sectionLink('lead')"
         variant="coral"
         size="lg"
         class="mt-7 !rounded-[14px] !shadow-none"
-        @click="setLeadContext({ kind: 'datacenter', key: 'datacenter', label: data.heading?.title ?? '' })"
+        @click="openOrder({ context: { kind: 'datacenter', key: 'datacenter', label: data.heading?.title ?? '' } })"
       >
         {{ t('dc.order') }}<AppIcon name="arrowRight" :size="17" :stroke-width="2.4" />
       </BaseButton>
