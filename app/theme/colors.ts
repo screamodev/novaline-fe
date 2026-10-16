@@ -107,6 +107,8 @@ export const gradients = {
   'slide-violet': `linear-gradient(125deg, ${palette.violet} 0%, ${palette.violetMid} 58%, ${palette.coral} 125%)`,
   'slide-navy': `linear-gradient(150deg, ${palette.navy} 0%, ${palette.violetDeep} 100%)`,
   'slide-glow': `radial-gradient(520px 380px at 88% 12%, ${withAlpha(palette.violet2, 0.38)}, transparent 62%), radial-gradient(480px 360px at 4% 100%, ${withAlpha(palette.coral, 0.22)}, transparent 60%)`,
+  'slide-scrim-dark': `linear-gradient(90deg, ${palette.navy} 0%, ${palette.navy} 30%, ${withAlpha(palette.navy, 0.86)} 46%, ${withAlpha(palette.navy, 0.35)} 64%, ${withAlpha(palette.navy, 0)} 80%)`,
+  'slide-scrim-dark-mobile': `linear-gradient(180deg, ${withAlpha(palette.navy, 0.78)}, ${withAlpha(palette.navy, 0.62)} 52%, ${withAlpha(palette.navy, 0.94)})`,
   'slide-progress': `linear-gradient(90deg, ${palette.violet}, ${palette.coral})`,
   'plans-bg': `linear-gradient(180deg, ${palette.white}, ${palette.bg})`,
 } as const

@@ -14,7 +14,7 @@
 - **FR-002** `[be]` Component `shared.cta`: label, action (`order | callback | coverage | link`), url (for `link`), variant (`violet | coral | white`). Lifecycle rejects `activeFrom > activeUntil` and `link` without URL.
 - **FR-003** `[be]` Contract R22 with the active-window filter; `home-page.hero` stays as the fallback slide (R2 unchanged).
 - **FR-004** BFF `/api/cms/home` returns `slides: HeroSlideVM[]`; the normaliser re-checks the date window (SWR cache), drops untitled slides and invalid CTAs, and falls back to `home-page.hero` when nothing is active.
-- **FR-005** `HeroSlider` (embla-carousel-vue + autoplay): loop, swipe, ←/→ keys, 6 s autoplay paused on hover/focus, pause button (WCAG 2.2.2), no autoplay under `prefers-reduced-motion`, progress pills + `01 / 03` counter, no controls for a single slide.
+- **FR-005** `HeroSlider` (embla-carousel-vue + autoplay): loop, swipe, ←/→ keys, 6 s autoplay paused on hover/focus, no autoplay under `prefers-reduced-motion`, arrows on the slider edges (hidden on phones), progress pills, no controls for a single slide. Revision 2026-10-16: pause button and `01 / 03` counter removed at the client's request.
 - **FR-006** A11y: carousel region with `aria-roledescription`, slides as labelled groups, off-screen slides `inert`; only the first slide renders `<h1>`.
 - **FR-007** Performance: SSR renders the first slide in place (no CLS); only its photo is preloaded with `fetchpriority=high`.
 - **FR-008** CTA actions: `order` opens `OrderDialog` with the slide title as context, `callback` opens `CallbackDialog`, `coverage` links to `#coverage`, `link` → locale-aware internal route or external tab.
@@ -32,3 +32,4 @@
 - [x] T004 Types `HeroSlideVM`/`CtaVM`, normaliser + fallback, BFF query
 - [x] T005 `HeroSlide`, `HeroSlider`, `CtaButton`; theme gradients in `app/theme/colors.ts`
 - [x] T006 i18n `hero.slider.*`, unit tests, browser check (desktop/mobile, uk/en)
+- [x] T007 Revision: side arrows, no pause/counter; slides "backup power" (main) and "we're hiring" (→ /vacancies) with Unsplash photos (`scripts/seed-data/media/CREDITS.md`); PON slide removed (stays as the `home-page.hero` fallback)

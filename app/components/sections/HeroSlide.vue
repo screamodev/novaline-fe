@@ -35,7 +35,7 @@ const THEMES = {
         class="absolute inset-y-0 right-0 h-full w-auto max-w-[70%] object-cover object-center max-tab:max-w-full"
       />
       <div v-if="!dark" class="absolute inset-0 bg-hero-scrim max-tab:bg-hero-scrim-mobile" aria-hidden="true" />
-      <div v-else class="absolute inset-0 bg-overlay max-tab:bg-overlay" aria-hidden="true" />
+      <div v-else class="absolute inset-0 bg-slide-scrim-dark max-tab:bg-slide-scrim-dark-mobile" aria-hidden="true" />
     </template>
     <div class="absolute inset-0" :class="dark ? 'bg-slide-glow' : 'bg-hero-glow'" aria-hidden="true" />
 

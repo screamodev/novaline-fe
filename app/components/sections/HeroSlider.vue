@@ -18,13 +18,11 @@ const [viewport, embla] = emblaCarouselVue({ loop: true, duration: 32, active: m
 const selected = ref(0)
 /** Content fade-up only after the first user/auto change: the initial paint stays static for LCP. */
 const changed = ref(false)
-/** Autoplay is on unless the visitor paused it or prefers reduced motion (assumed on during SSR, so the icon does not flip). */
-const playing = ref(multiple.value)
+/** Autoplay runs unless the visitor prefers reduced motion; it pauses on hover/focus (embla option). */
+const autoplaying = ref(false)
 /** The current timer is running (it stops while hovered/focused); drives the progress bar. */
 const ticking = ref(false)
 const tick = ref(0)
-
-const pad = (n: number) => String(n).padStart(2, '0')
 
 onMounted(() => {
   const api = embla.value
@@ -38,20 +36,11 @@ onMounted(() => {
     ticking.value = true
   })
   api.on('autoplay:timerstopped', () => (ticking.value = false))
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) playing.value = false
-  else play()
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+  autoplaying.value = true
+  autoplay.play()
 })
 
-function play() {
-  playing.value = true
-  autoplay.play()
-}
-function pause() {
-  playing.value = false
-  ticking.value = false
-  autoplay.stop()
-}
-const toggle = () => (playing.value ? pause() : play())
 const go = (i: number) => embla.value?.scrollTo(i)
 const prev = () => embla.value?.scrollPrev()
 const next = () => embla.value?.scrollNext()
@@ -73,7 +62,7 @@ function onKey(e: KeyboardEvent) {
     <div class="container-page max-sm:px-3">
       <div class="relative">
         <div ref="viewport" class="overflow-hidden rounded-[28px] shadow-card">
-          <div class="flex touch-pan-y" :aria-live="playing ? 'off' : 'polite'">
+          <div class="flex touch-pan-y" :aria-live="autoplaying ? 'off' : 'polite'">
             <div
               v-for="(slide, i) in slides"
               :key="slide.key"
@@ -89,12 +78,31 @@ function onKey(e: KeyboardEvent) {
           </div>
         </div>
 
-        <!-- Controls: progress pills (left), counter + pause + arrows (right). -->
-        <div
-          v-if="multiple"
-          class="pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 px-14 pb-8 max-lg:px-10 max-sm:justify-start max-sm:px-5 max-sm:pb-6"
-        >
-          <div class="pointer-events-auto flex items-center gap-2" role="tablist" :aria-label="t('hero.slider.label')">
+        <!-- Arrows on the slider edges (desktop/tablet; phones swipe). -->
+        <template v-if="multiple">
+          <button
+            type="button"
+            class="hero-arrow left-0 -translate-x-1/2 max-tab:left-4 max-tab:translate-x-0"
+            :aria-label="t('hero.slider.prev')"
+            @click="prev"
+          >
+            <AppIcon name="arrowLeft" :size="20" :stroke-width="2.4" />
+          </button>
+          <button
+            type="button"
+            class="hero-arrow right-0 translate-x-1/2 max-tab:right-4 max-tab:translate-x-0"
+            :aria-label="t('hero.slider.next')"
+            @click="next"
+          >
+            <AppIcon name="arrowRight" :size="20" :stroke-width="2.4" />
+          </button>
+
+          <!-- Progress pills: the active one fills while its autoplay timer runs. -->
+          <div
+            class="absolute bottom-8 left-14 flex items-center gap-2 max-lg:left-10 max-sm:bottom-6 max-sm:left-5"
+            role="tablist"
+            :aria-label="t('hero.slider.label')"
+          >
             <button
               v-for="(slide, i) in slides"
               :key="slide.key"
@@ -102,7 +110,7 @@ function onKey(e: KeyboardEvent) {
               role="tab"
               :aria-selected="i === selected"
               :aria-label="t('hero.slider.goTo', { n: i + 1 })"
-              class="group relative h-2.5 overflow-hidden rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
+              class="relative h-2.5 overflow-hidden rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet"
               :class="[
                 i === selected ? 'w-14' : 'w-2.5 hover:w-5',
                 slides[selected]?.theme === 'light' ? 'bg-navy/15' : 'bg-white/30',
@@ -113,43 +121,20 @@ function onKey(e: KeyboardEvent) {
                 v-if="i === selected"
                 :key="tick"
                 class="absolute inset-y-0 left-0 rounded-full"
-                :class="[slides[selected]?.theme === 'light' ? 'bg-slide-progress' : 'bg-white', ticking && playing ? 'hero-progress' : 'w-full']"
+                :class="[slides[selected]?.theme === 'light' ? 'bg-slide-progress' : 'bg-white', ticking && autoplaying ? 'hero-progress' : 'w-full']"
                 :style="{ animationDuration: `${DELAY}ms` }"
               />
             </button>
           </div>
-
-          <div class="pointer-events-auto flex items-center gap-2.5">
-            <span
-              class="mr-0.5 grid h-11 place-items-center rounded-full bg-white px-4 font-display text-[14px] font-bold tabular-nums text-navy shadow-chip max-sm:hidden"
-              aria-hidden="true"
-            >
-              <span>{{ pad(selected + 1) }} <span class="text-muted">/ {{ pad(slides.length) }}</span></span>
-            </span>
-            <button
-              type="button"
-              class="hero-ctrl grid"
-              :aria-label="playing ? t('hero.slider.pause') : t('hero.slider.play')"
-              @click="toggle"
-            >
-              <AppIcon :name="playing ? 'pause' : 'play'" :size="16" :stroke-width="2.4" />
-            </button>
-            <button type="button" class="hero-ctrl grid max-sm:hidden" :aria-label="t('hero.slider.prev')" @click="prev">
-              <AppIcon name="arrowLeft" :size="18" :stroke-width="2.4" />
-            </button>
-            <button type="button" class="hero-ctrl grid max-sm:hidden" :aria-label="t('hero.slider.next')" @click="next">
-              <AppIcon name="arrowRight" :size="18" :stroke-width="2.4" />
-            </button>
-          </div>
-        </div>
+        </template>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.hero-ctrl {
-  @apply h-11 w-11 place-items-center rounded-full border-[1.5px] border-line bg-white text-navy shadow-chip transition duration-200 hover:border-violet hover:text-violet focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet;
+.hero-arrow {
+  @apply absolute top-1/2 z-10 grid h-12 w-12 -translate-y-1/2 place-items-center rounded-full border-[1.5px] border-line bg-white text-navy shadow-float transition duration-200 hover:border-violet hover:text-violet focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet max-sm:hidden;
 }
 .hero-progress {
   animation: hero-progress linear forwards;
