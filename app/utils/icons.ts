@@ -10,6 +10,12 @@ export interface IconDef {
 export const ICONS = {
   arrowRight: { mode: 'stroke', body: '<path d="M5 12h14M13 6l6 6-6 6"/>' },
   arrowLeft: { mode: 'stroke', body: '<path d="M19 12H5M11 6 5 12l6 6"/>' },
+  chevronDown: { mode: 'stroke', body: '<path d="m6 9 6 6 6-6"/>' },
+  pin: { mode: 'stroke', body: '<path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>' },
+  briefcase: { mode: 'stroke', body: '<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M3 13h18"/>' },
+  clock: { mode: 'stroke', body: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>' },
+  mail: { mode: 'stroke', body: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>' },
+  link: { mode: 'stroke', body: '<path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/>' },
   volume: { mode: 'stroke', body: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a9 9 0 0 1 0 14"/>' },
   play: { mode: 'fill', body: '<path d="M8 5v14l11-7z"/>' },
   pause: { mode: 'fill', body: '<rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/>' },

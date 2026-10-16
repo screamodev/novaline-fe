@@ -100,21 +100,36 @@ export interface ArticleCardVM {
   publishedDate: string
 }
 
+export type CtaAction = 'order' | 'callback' | 'coverage' | 'link'
+export type CtaVariant = 'violet' | 'coral' | 'white'
+export type SlideTheme = 'light' | 'violet' | 'navy'
+
+/** A CMS-driven button: the label plus what clicking it does. */
+export interface CtaVM {
+  label: string
+  action: CtaAction
+  /** Only for `link`: a site path (`/radio`, `/#tv`) or an absolute https URL. */
+  url: string | null
+  variant: CtaVariant
+}
+
+export interface HeroSlideVM {
+  key: string
+  theme: SlideTheme
+  kicker: string | null
+  title: string
+  titleAccent: string | null
+  subtitle: string | null
+  image: MediaVM | null
+  highlight: { value: string; unit: string | null; caption: string | null } | null
+  primaryCta: CtaVM | null
+  secondaryCta: CtaVM | null
+}
+
 export interface HomeVM {
   seo: SeoVM
-  hero: {
-    kicker: string | null
-    titleLine1: string
-    titleLine2: string | null
-    subtitle: string | null
-    promoText: string | null
-    primaryCta: string | null
-    secondaryCta: string | null
-    image: MediaVM | null
-    speedValue: string | null
-    speedUnit: string | null
-    speedCaption: string | null
-  }
+  /** Active hero slides in display order; never empty when the CMS has a home page (falls back to `home-page.hero`). */
+  slides: HeroSlideVM[]
   trust: { icon: TrustIcon; title: string; text: string }[]
   coverage: {
     heading: HeadingVM | null

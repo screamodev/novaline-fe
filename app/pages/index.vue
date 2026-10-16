@@ -52,7 +52,7 @@ if (h) {
 
 <template>
   <div v-if="home">
-    <HeroSection :hero="home.hero" />
+    <HeroSlider :slides="home.slides" />
     <TrustStrip :items="home.trust" />
     <CoverageSection :copy="home.coverage" />
     <ServicesSection v-if="show('services')" :data="home.services" />

@@ -1,6 +1,11 @@
 import type {
   AddonVM,
   ArticleCardVM,
+  CtaAction,
+  CtaVM,
+  CtaVariant,
+  HeroSlideVM,
+  SlideTheme,
   DcServiceVM,
   HeadingVM,
   HomeVM,
@@ -23,6 +28,7 @@ type Raw = Record<string, any>
 /** Everything `/api/cms/home` fetched, in raw form. */
 export interface HomeRaw {
   page: Raw | null
+  slides: Raw[]
   services: Raw[]
   plans: Raw[]
   addons: Raw[]
@@ -68,6 +74,65 @@ export function kyivToday(now = new Date()): string {
   return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Kyiv' }).format(now)
 }
 
+const oneOf = <T extends string>(v: unknown, allowed: readonly T[], fallback: T): T =>
+  allowed.includes(v as T) ? (v as T) : fallback
+
+const CTA_ACTIONS: readonly CtaAction[] = ['order', 'callback', 'coverage', 'link']
+const CTA_VARIANTS: readonly CtaVariant[] = ['violet', 'coral', 'white']
+const SLIDE_THEMES: readonly SlideTheme[] = ['light', 'violet', 'navy']
+
+/** A CMS button; dropped when it has no label or is a link without a URL. */
+export function toCta(c: Raw | null | undefined, fallbackVariant: CtaVariant = 'violet'): CtaVM | null {
+  const label = opt(c?.label)
+  if (!c || !label) return null
+  const action = oneOf(c.action, CTA_ACTIONS, 'order')
+  const url = opt(c.url)?.trim() ?? null
+  if (action === 'link' && !url) return null
+  return { label, action, url: action === 'link' ? url : null, variant: oneOf(c.variant, CTA_VARIANTS, fallbackVariant) }
+}
+
+/** Whether `today` (YYYY-MM-DD) is inside the slide's optional activeFrom…activeUntil window. */
+export const isActive = (s: Raw, today: string): boolean =>
+  (!s.activeFrom || s.activeFrom <= today) && (!s.activeUntil || s.activeUntil >= today)
+
+export function toSlide(s: Raw, mediaBase: string): HeroSlideVM {
+  const value = opt(s.highlightValue)
+  return {
+    key: str(s.key),
+    theme: oneOf(s.theme, SLIDE_THEMES, 'light'),
+    kicker: opt(s.kicker),
+    title: str(s.title),
+    titleAccent: opt(s.titleAccent),
+    subtitle: opt(s.subtitle),
+    image: withAlt(toMedia(s.image, mediaBase), opt(s.imageAlt)),
+    highlight: value ? { value, unit: opt(s.highlightUnit), caption: opt(s.highlightCaption) } : null,
+    primaryCta: toCta(s.primaryCta),
+    secondaryCta: toCta(s.secondaryCta, 'white'),
+  }
+}
+
+/** The legacy single hero (`home-page.hero`) as one slide: shown when no slide is active. */
+export function heroAsSlide(hero: Raw, mediaBase: string): HeroSlideVM {
+  return toSlide(
+    {
+      key: 'hero',
+      theme: 'light',
+      kicker: hero.kicker,
+      title: hero.titleLine1,
+      titleAccent: hero.titleLine2,
+      subtitle: hero.subtitle,
+      image: hero.image,
+      imageAlt: hero.imageAlt,
+      highlightValue: hero.speedValue,
+      highlightUnit: hero.speedUnit,
+      highlightCaption: hero.speedCaption,
+      primaryCta: hero.primaryCta ? { label: hero.primaryCta, action: 'coverage' } : null,
+      secondaryCta: hero.secondaryCta ? { label: hero.secondaryCta, action: 'order', variant: 'white' } : null,
+    },
+    mediaBase,
+  )
+}
+
 const plan = (p: Raw): PlanVM => ({
   key: str(p.key),
   segment: p.segment as PlanSegment,
@@ -84,7 +149,8 @@ export const businessPlans = (plans: Raw[]): PlanVM[] => plans.filter((p) => p.s
 
 export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday()): HomeVM {
   const page = raw.page ?? {}
-  const hero = page.hero ?? {}
+  const active = raw.slides.filter((s) => isActive(s, today) && opt(s.title)).map((s) => toSlide(s, mediaBase))
+  const slides = active.length ? active : page.hero?.titleLine1 ? [heroAsSlide(page.hero, mediaBase)] : []
 
   const addons: AddonVM[] = raw.addons.map((a) => ({
     key: str(a.key),
@@ -148,19 +214,7 @@ export function normalizeHome(raw: HomeRaw, mediaBase: string, today = kyivToday
 
   return {
     seo: toSeo(page.seo, mediaBase),
-    hero: {
-      kicker: opt(hero.kicker),
-      titleLine1: str(hero.titleLine1),
-      titleLine2: opt(hero.titleLine2),
-      subtitle: opt(hero.subtitle),
-      promoText: opt(hero.promoText),
-      primaryCta: opt(hero.primaryCta),
-      secondaryCta: opt(hero.secondaryCta),
-      image: withAlt(toMedia(hero.image, mediaBase), opt(hero.imageAlt)),
-      speedValue: opt(hero.speedValue),
-      speedUnit: opt(hero.speedUnit),
-      speedCaption: opt(hero.speedCaption),
-    },
+    slides,
     trust: (page.trustItems ?? []).map((t: Raw) => ({ icon: t.icon, title: str(t.title), text: str(t.text) })),
     coverage: {
       heading: toHeading(page.coverage?.heading),

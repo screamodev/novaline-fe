@@ -104,6 +104,10 @@ export const gradients = {
   'radio-base': `linear-gradient(160deg, ${palette.navy2}, ${palette.radioNightDeep})`,
   'radio-art': `linear-gradient(160deg, ${withAlpha(palette.violet, 0.9)}, ${withAlpha(palette.coral, 0.85)})`,
   'radio-art-tint': `linear-gradient(160deg, ${withAlpha(palette.violet, 0.35)}, ${withAlpha(palette.coral, 0.35)})`,
+  'slide-violet': `linear-gradient(125deg, ${palette.violet} 0%, ${palette.violetMid} 58%, ${palette.coral} 125%)`,
+  'slide-navy': `linear-gradient(150deg, ${palette.navy} 0%, ${palette.violetDeep} 100%)`,
+  'slide-glow': `radial-gradient(520px 380px at 88% 12%, ${withAlpha(palette.violet2, 0.38)}, transparent 62%), radial-gradient(480px 360px at 4% 100%, ${withAlpha(palette.coral, 0.22)}, transparent 60%)`,
+  'slide-progress': `linear-gradient(90deg, ${palette.violet}, ${palette.coral})`,
   'plans-bg': `linear-gradient(180deg, ${palette.white}, ${palette.bg})`,
 } as const
 

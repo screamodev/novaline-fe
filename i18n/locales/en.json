@@ -16,7 +16,9 @@
     "about": "About",
     "lead": "Request",
     "more": "More",
-    "radio": "Radio"
+    "radio": "Radio",
+    "vacancies": "Careers",
+    "hiring": "Hiring"
   },
   "cta": {
     "order": "Order now"
@@ -61,7 +63,16 @@
     "order": "Order"
   },
   "hero": {
-    "speedAlt": "Connection speed"
+    "speedAlt": "Connection speed",
+    "slider": {
+      "label": "Current offers",
+      "slideOf": "{n} of {total}",
+      "goTo": "Go to slide {n}",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "pause": "Pause autoplay",
+      "play": "Resume autoplay"
+    }
   },
   "tv": {
     "channelsIn": "channels included",
@@ -177,7 +188,8 @@
   "breadcrumbs": {
     "home": "Home",
     "news": "News",
-    "coverage": "Coverage"
+    "coverage": "Coverage",
+    "vacancies": "Careers"
   },
   "locality": {
     "directoryTitle": "NovaLine coverage",
@@ -273,5 +285,54 @@
     "success": "Thank you! We will call you shortly.",
     "close": "Close",
     "about": "You chose"
+  },
+  "careers": {
+    "title": "Careers at NovaLine",
+    "kicker": "Careers",
+    "listTitle": "Open positions",
+    "allCities": "All cities",
+    "allDepartments": "All departments",
+    "filterCity": "City",
+    "filterDepartment": "Department",
+    "found": "Found: {n}",
+    "reset": "Reset filters",
+    "noMatch": "No positions match these filters.",
+    "hot": "Hot",
+    "salaryNone": "Salary negotiable",
+    "details": "Details",
+    "collapse": "Collapse",
+    "responsibilities": "Responsibilities",
+    "requirements": "Requirements",
+    "offer": "What we offer",
+    "apply": "Apply",
+    "call": "Call",
+    "telegram": "Message on Telegram",
+    "email": "Send your CV",
+    "mailSubject": "Vacancy: {title}",
+    "copyLink": "Copy link",
+    "copied": "Link copied",
+    "contactsTitle": "Didn’t find your role?",
+    "contactsHint": "We reply on working days, 9:00–18:00",
+    "employment": {
+      "full-time": "Full-time",
+      "part-time": "Part-time",
+      "shift": "Shift work",
+      "contract": "Contract / project",
+      "internship": "Internship"
+    },
+    "format": {
+      "office": "On-site",
+      "field": "Field work",
+      "remote": "Remote",
+      "hybrid": "Hybrid"
+    },
+    "vacanciesWord": {
+      "one": "open position",
+      "other": "open positions"
+    },
+    "citiesWord": {
+      "one": "city",
+      "other": "cities"
+    }
   }
 }

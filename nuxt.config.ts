@@ -115,6 +115,8 @@ export default defineNuxtConfig({
       '/en/news/**': { swr: 60 },
       '/internet/**': { swr: 300 },
       '/en/internet/**': { swr: 300 },
+      '/vacancies': { swr: 300 },
+      '/en/vacancies': { swr: 300 },
     },
   },
 

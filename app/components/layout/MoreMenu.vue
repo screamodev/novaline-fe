@@ -1,6 +1,7 @@
 <script setup lang="ts">
 const { t } = useI18n()
 const sectionLink = useSectionLink()
+const localePath = useLocalePath()
 const hidden = useHiddenSections()
 const visible = <T extends SectionId>(ids: readonly T[]) => ids.filter((id) => !hidden.value.includes(id))
 const open = ref(false)
@@ -51,6 +52,14 @@ onBeforeUnmount(close)
         @click="close"
       >
         {{ t(`nav.${id}`) }}
+      </NuxtLink>
+      <div class="mx-2 my-1 border-t border-line" aria-hidden="true" />
+      <NuxtLink
+        :to="localePath('/vacancies')"
+        class="flex items-center justify-between gap-3 rounded-[10px] px-3.5 py-[11px] text-[14px] font-semibold text-ink hover:bg-bg hover:text-violet"
+        @click="close"
+      >
+        {{ t('nav.vacancies') }}<span class="rounded-full bg-coral-soft px-2 py-0.5 text-[11px] font-bold text-coral-strong">{{ t('nav.hiring') }}</span>
       </NuxtLink>
     </div>
   </div>

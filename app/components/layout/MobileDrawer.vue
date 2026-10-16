@@ -60,6 +60,12 @@ watch(() => route.fullPath, close)
           >
             {{ t('nav.radio') }}<span aria-hidden="true">→</span>
           </NuxtLink>
+          <NuxtLink
+            :to="localePath('/vacancies')"
+            class="flex min-h-11 items-center justify-between border-b border-line px-1 py-4 text-[16.5px] font-bold text-navy hover:text-violet"
+          >
+            {{ t('nav.vacancies') }}<span class="text-violet" aria-hidden="true">→</span>
+          </NuxtLink>
         </nav>
 
         <div class="mt-[22px]">

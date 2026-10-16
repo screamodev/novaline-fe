@@ -70,6 +70,7 @@ const SOCIAL_ICON: Record<SocialNetwork, IconName> = {
           </NuxtLink>
           <NuxtLink :to="localePath('/internet')" class="text-on-dark hover:text-white max-sm:py-[11px]">{{ t('footer.coverage') }}</NuxtLink>
           <NuxtLink :to="localePath('/radio')" class="text-on-dark hover:text-white max-sm:py-[11px]">{{ t('nav.radio') }}</NuxtLink>
+          <NuxtLink :to="localePath('/vacancies')" class="text-on-dark hover:text-white max-sm:py-[11px]">{{ t('nav.vacancies') }}</NuxtLink>
           <a v-if="global?.cabinetUrl" :href="global.cabinetUrl" target="_blank" rel="noopener" class="text-on-dark hover:text-white max-sm:py-[11px]">
             {{ t('topbar.cabinet') }}
           </a>
